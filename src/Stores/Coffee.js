@@ -3,6 +3,10 @@ import Client from "../Client.js";
 let changeListeners = [];
 let coffees = [];
 let processings = [];
+let productStatuses = [];
+let coffeesPromise = null;
+let processingPromise = null;
+let statusesPromise = null;
 
 let notifyChange = () => {
   changeListeners.forEach((listener) => {
@@ -11,28 +15,40 @@ let notifyChange = () => {
 }
 
 let fetchCoffees = () => {
+  if (coffeesPromise) {
+    return;
+  }
 
-  Client.items()
-    .type('coffee')
-    .orderParameter('elements.product_name')
-    .get()
-    .subscribe(response => {
-      coffees = response.items;
-      notifyChange();
-    });
+  coffeesPromise = Client.getItems({
+    "system.type": "coffee",
+    "order": "elements.product_name"
+  }).then((response) => {
+    coffees = response.items;
+    notifyChange();
+  });
 }
 
-let fetchFilterProperties = () => {
-  Client
-    .type('coffee')
-    .get()
-    .subscribe(response => {
-      processings = response
-        .type
-        .elements.find(element => element.codename === "processing")
-        .options;
-    });
+let fetchProcessings = () => {
+  if (processingPromise) {
+    return;
+  }
+
+  processingPromise = Client.getTaxonomy("processing_type").then((response) => {
+    processings = response.terms;
+    notifyChange();
+  });
 };
+
+let fetchStatuses = () => {
+  if (statusesPromise) {
+    return;
+  }
+
+    statusesPromise = Client.getTaxonomy("product_status").then((response) => {
+        productStatuses = response.terms;
+        notifyChange();
+    });
+}
 
 export class Filter {
   constructor() {
@@ -41,7 +57,7 @@ export class Filter {
   }
 
   matches(coffee) {
-    return this.matchesProcessings(coffee);
+    return this.matchesProcessings(coffee) && this.matchesProductStatuses(coffee);
   }
 
   matchesProcessings(coffee) {
@@ -49,16 +65,32 @@ export class Filter {
       return true;
     }
 
-    let value = coffee.processing.value;
+    let value = coffee.elements.processing_type.value;
     let processing = value.length > 0 ? value[0].codename : null;
 
     return this.processings.indexOf(processing) >= 0;
+  }
+
+  matchesProductStatuses(cofee) {
+    if (this.productStatuses.length === 0) {
+      return true;
+    }
+
+    let statuses = cofee.elements.product_status.value.map(x => x.codename);
+
+    return this.productStatuses.some(x => statuses.includes(x));
   }
 
   toggleProcessing(processing) {
     let index = this.processings.indexOf(processing);
 
     if (index < 0) this.processings.push(processing); else this.processings.splice(index, 1);
+  }
+
+  toggleProductStatus(status) {
+    let index = this.productStatuses.indexOf(status);
+
+    if (index < 0) this.productStatuses.push(status); else this.productStatuses.splice(index, 1);
   }
 }
 
@@ -77,13 +109,17 @@ class CoffeeStore {
   }
 
   provideProcessings() {
-    fetchFilterProperties();
+    fetchProcessings();
+  }
+
+  provideProductStatuses() {
+    fetchStatuses();
   }
 
   // Methods
 
   getCoffee(coffeeSlug) {
-    return coffees.find((coffee) => coffee.urlPattern.value === coffeeSlug);
+    return coffees.find((coffee) => coffee.elements.url_pattern.value === coffeeSlug);
   }
 
   getCoffees() {
@@ -92,6 +128,10 @@ class CoffeeStore {
 
   getProcessings() {
     return processings;
+  }
+
+  getProductStatuses() {
+    return productStatuses;
   }
 
   getFilter() {

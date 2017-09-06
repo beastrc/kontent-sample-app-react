@@ -44,11 +44,12 @@ class LatestArticles extends Component {
     };
 
     var otherArticles = this.state.articles.slice(1).map((article, index) => {
-      let title = article.title.value;
-      let imageLink = article.teaserImage.value[0].url;
-      let postDate = formatDate(article.postDate.value);
-      let summary = article.summary.value;
-      let link = "/articles/" + article.urlPattern.value;
+      let e = article.elements;
+      let title = e.title.value;
+      let imageLink = e.teaser_image.value[0].url;
+      let postDate = formatDate(e.post_date.value);
+      let summary = e.summary.value;
+      let link = "/articles/" + article.elements.url_pattern.value;
 
       return (
         <div className="col-md-3" key={index}>
@@ -73,11 +74,12 @@ class LatestArticles extends Component {
     });
 
     let article = this.state.articles[0];
-    let title = article.title.value;
-    let imageLink = article.teaserImage.value[0].url;
-    let postDate = formatDate(article.postDate.value);
-    let summary = article.summary.value;
-    let link = "/articles/" + article.urlPattern.value;
+    let e = article.elements;
+    let title = e.title.value;
+    let imageLink = e.teaser_image.value[0].url;
+    let postDate = formatDate(e.post_date.value);
+    let summary = e.summary.value;
+    let link = "/articles/" + article.elements.url_pattern.value;
 
     return (
       <div className="row">

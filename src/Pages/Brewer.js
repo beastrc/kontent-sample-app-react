@@ -37,10 +37,10 @@ class Brewer extends Component {
       );
     }
 
-    let brewer = this.state.brewer;
-    let name = brewer.productName.value;
-    let imageLink = brewer.image.value[0].url;
-    let descriptionElement = brewer.longDescription;
+    let e = this.state.brewer.elements;
+    let name = e.product_name.value;
+    let imageLink = e.image.value[0].url;
+    let descriptionElement = e.long_description;
 
     return (
       <div className="container">

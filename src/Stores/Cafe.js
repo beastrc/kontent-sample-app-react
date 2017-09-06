@@ -1,6 +1,5 @@
 import Client from "../Client.js";
 
-
 let changeListeners = [];
 let initialized = false;
 let cafes = [];
@@ -16,15 +15,15 @@ let fetchCafes = () => {
     return;
   }
 
-  Client.items()
-  .type('cafe')
-  .orderParameter('system.name')
-  .get()
-  .subscribe(response => {
+  Client.getItems({
+    "system.type": "cafe",
+    "order": "system.name"
+  }).then((response) => {
     cafes = response.items;
     notifyChange();
-    initialized = true;
   });
+
+  initialized = true;
 }
 
 class CafeStore {
@@ -42,11 +41,11 @@ class CafeStore {
   // Methods
 
   getPartnerCafes() {
-    return cafes.filter((cafe) => cafe.country.value !== "USA");
+    return cafes.filter((cafe) => cafe.elements.country.value !== "USA");
   }
 
   getCompanyCafes() {
-    return cafes.filter((cafe) => cafe.country.value === "USA");
+    return cafes.filter((cafe) => cafe.elements.country.value === "USA");
   }
 
   // Listeners
