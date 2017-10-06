@@ -1,5 +1,4 @@
 import {  ContentItem } from 'kentico-cloud-delivery-typescript-sdk';
-import {  resolveContentLink } from '../Utilities/ContentLinks';
 
 export class Grinder extends ContentItem {
 
@@ -26,8 +25,7 @@ export class Grinder extends ContentItem {
                 if (fieldName === 'url_pattern'){
                     return 'urlPattern';
                 }
-            }),
-            linkResolver: (link) => resolveContentLink(link)
+            })
         })    
     }
     
