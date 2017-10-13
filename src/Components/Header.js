@@ -1,10 +1,6 @@
 import React from 'react';
 import { Link, IndexLink } from 'react-router'
 
-var LogClick = function(){
-      window.ket('action', 'Custom_Activity_Codename');
-}
-
 const Header = () => {
   return (
     <header className="header" role="banner">
@@ -22,7 +18,7 @@ const Header = () => {
                 <Link to="/articles">Articles</Link>
               </li>
               <li>
-                <Link to="/about" onClick={LogClick}>About us</Link>
+                <Link to="/about">About us</Link>
               </li>
               <li>
                 <Link to="/cafes">Cafes</Link>
