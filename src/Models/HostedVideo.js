@@ -1,5 +1,4 @@
 import {  ContentItem } from 'kentico-cloud-delivery-typescript-sdk';
-import {  resolveContentLink } from '../Utilities/ContentLinks';
 
 export class HostedVideo extends ContentItem {
     
@@ -14,8 +13,7 @@ export class HostedVideo extends ContentItem {
                 if (fieldName === 'video_host'){
                     return 'videoHost';
                 }
-            }),
-            linkResolver: (link) => resolveContentLink(link)
+            })
         })    
     }
     

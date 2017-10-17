@@ -1,5 +1,4 @@
 import {  ContentItem } from 'kentico-cloud-delivery-typescript-sdk';
-import {  resolveContentLink } from '../Utilities/ContentLinks';
 
 export class Article extends ContentItem {
    constructor(){
@@ -33,8 +32,8 @@ export class Article extends ContentItem {
                 if (fieldName === 'url_pattern'){
                     return 'urlPattern';
                 }
-            }),
-            linkResolver: (link) => resolveContentLink(link)
+
+            })
         })    
     }
     

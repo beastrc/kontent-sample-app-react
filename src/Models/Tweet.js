@@ -1,5 +1,4 @@
 import {  ContentItem } from 'kentico-cloud-delivery-typescript-sdk';
-import {  resolveContentLink } from '../Utilities/ContentLinks';
 
 export class Tweet extends ContentItem {
     constructor(){
@@ -13,8 +12,7 @@ export class Tweet extends ContentItem {
                 if (fieldName === 'display_options'){
                     return 'displayOptions';
                 }
-            }),
-            linkResolver: (link) => resolveContentLink(link)
+            })
         })    
     }
     

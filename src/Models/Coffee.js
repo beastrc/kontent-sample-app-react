@@ -1,5 +1,4 @@
 import {  ContentItem } from 'kentico-cloud-delivery-typescript-sdk';
-import {  resolveContentLink } from '../Utilities/ContentLinks';
 
 export class Coffee extends ContentItem {
     
@@ -27,8 +26,7 @@ export class Coffee extends ContentItem {
                     return 'urlPattern';
                 }
 
-            }),
-            linkResolver: (link) => resolveContentLink(link)
+            })
         })    
     }
     

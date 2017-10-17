@@ -1,5 +1,4 @@
 import {  ContentItem } from 'kentico-cloud-delivery-typescript-sdk';
-import {  resolveContentLink } from '../Utilities/ContentLinks';
 
 export class Cafe extends ContentItem {
 
@@ -11,8 +10,7 @@ export class Cafe extends ContentItem {
                     return 'zipCode';
                 }
 
-            }),
-            linkResolver: (link) => resolveContentLink(link)
+            })
         })    
     }    
 }
