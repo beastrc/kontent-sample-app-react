@@ -1,0 +1,30 @@
+﻿[
+     {
+        "item":  {
+                 "id":  "6a4bbe7b-e6ce-4f79-a006-174708cb91e6"
+                 },
+        "elements":  {
+                     "product_name":  "Molino Grande de Muelas de Porcelana Porlex",
+                     "price":  32.9,
+                     "manufacturer":  "Porlex"
+                     },
+        "language":  {
+                     "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"
+                     },
+        "last_modified":  "2017-04-04T13:52:33.3284917Z"
+    },
+     {
+        "item":  {
+                 "id":  "6a4bbe7b-e6ce-4f79-a006-174708cb91e6"
+                 },
+        "elements":  {
+                     "product_name":  "Porlex Tall Ceramic Burr Grinder",
+                     "price":  32.9,
+                     "manufacturer":  "Porlex"
+                     },
+        "language":  {
+                     "id":  "00000000-0000-0000-0000-000000000000"
+                     },
+        "last_modified":  "2017-04-04T13:52:33.3284917Z"
+    }
+]
