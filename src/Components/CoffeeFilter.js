@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { translate } from 'react-translate'
-
 import CoffeeStore from "../Stores/Coffee";
 
 let getState = () => {
@@ -40,9 +38,9 @@ class CoffeeFilter extends Component {
 
     return (
       <aside className="col-md-4 col-lg-3 product-filter">
-        <h4>{this.props.t("coffeeProcessingTitle")}</h4>
+        <h4>Coffee processing</h4>
         <ProcessingFilter processings={processings} filter={filter}/>
-        <h4>{this.props.t("statusTitle")}</h4>
+        <h4>Status</h4>
         <ProductStatusFilter productStatuses={productStatuses} filter={filter}/>
       </aside>
     );
@@ -109,4 +107,4 @@ const ProductStatusFilterItem = (props) => {
   );
 }
 
-export default translate("CoffeeFilter")(CoffeeFilter);
+export default CoffeeFilter;

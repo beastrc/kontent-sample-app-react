@@ -1,66 +1,52 @@
 import Client from "../Client.js";
 
-import { initLanguageCodeObject, defaultLanguage, languageCodes } from '../Utilities/LanguageCodes'
 
 let changeListeners = [];
-let cafes = initLanguageCodeObject();
-let languageInitialized = {};
-languageCodes.forEach((language) => {
-  languageInitialized[language] = false;
-})
+let initialized = false;
+let cafes = [];
 
-
-let notifyChange = (newlanguage) => {
+let notifyChange = () => {
   changeListeners.forEach((listener) => {
-    listener(newlanguage);
+    listener();
   });
 }
 
-let fetchCafes = (language) => {
-  if(languageInitialized[language]){
-    notifyChange(language);
+let fetchCafes = () => {
+  if (initialized) {
     return;
   }
 
-  let query = Client.items()
-    .type('cafe')
-    .orderParameter('system.name')
-  if (language) {
-    query.languageParameter(language);
-  }
-
-  query.get()
-    .subscribe(response => {
-      if (language) {
-        cafes[language] = response.items;
-      } else {
-        cafes[defaultLanguage] = response.items;
-      }
-      notifyChange(language);
-      languageInitialized[language] = true;
-    });
+  Client.items()
+  .type('cafe')
+  .orderParameter('system.name')
+  .get()
+  .subscribe(response => {
+    cafes = response.items;
+    notifyChange();
+    initialized = true;
+  });
 }
 
 class CafeStore {
 
   // Actions
 
-  providePartnerCafes(language) {
-    fetchCafes(language);
+  providePartnerCafes() {
+    fetchCafes();
   }
 
-  provideCompanyCafes(language) {
-    fetchCafes(language);
+  provideCompanyCafes() {
+    fetchCafes();
   }
 
   // Methods
 
-  getPartnerCafes(language) {
-    return cafes[language].filter((cafe) => cafe.country.value !== "USA");
+  getPartnerCafes() {
+    return cafes.filter((cafe) => cafe.country.value !== "USA");
   }
 
-  getCompanyCafes(language) {
-    return cafes[language].filter((cafe) => cafe.country.value === "USA");
+  getCompanyCafes() {
+    return cafes.filter((cafe) => cafe.country.value === "USA");
   }
 
   // Listeners

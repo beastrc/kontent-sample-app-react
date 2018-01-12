@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import dateFormat from 'dateformat';
-
 import ArticleStore from '../Stores/Article';
 import RichTextElement from '../Components/RichTextElement';
-import { dateFormats } from '../Utilities/LanguageCodes'
+import dateFormat from 'dateformat';
 
 let getState = (props) => {
   return {
-    article: ArticleStore.getArticle(props.match.params.articleSlug, props.language)
+    article: ArticleStore.getArticle(props.params.articleSlug)
   };
 };
 
@@ -18,23 +16,15 @@ class Article extends Component {
 
     this.state = getState(props);
     this.onChange = this.onChange.bind(this);
-    dateFormat.i18n = dateFormats[props.language] || dateFormats[0];
   }
 
   componentDidMount() {
     ArticleStore.addChangeListener(this.onChange);
-    ArticleStore.provideArticle(this.props.match.params.articleSlug, this.props.language);
+    ArticleStore.provideArticle(this.props.params.articleSlug);
   }
 
   componentWillUnmount() {
     ArticleStore.removeChangeListener(this.onChange);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.language !== nextProps.language) {
-      ArticleStore.provideArticle(this.props.match.params.articleSlug, nextProps.language);
-      dateFormat.i18n = dateFormats[nextProps.language] || dateFormats[0];
-    }
   }
 
   onChange() {

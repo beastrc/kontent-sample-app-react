@@ -2,12 +2,12 @@ import React from 'react';
 import CoffeeFilter from "./CoffeeFilter";
 import Coffees from "./Coffees";
 
-const CoffeeStore = (props) => {
+const CoffeeStore = () => {
   return (
     <div className="product-page row">
       <div className="flex">
         <CoffeeFilter />
-        <Coffees language={props.language}/>
+        <Coffees />
       </div>
     </div>
   );

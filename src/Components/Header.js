@@ -1,10 +1,8 @@
 import React from 'react';
-import { translate } from 'react-translate'
-
-import Link from '../Components/LowerCaseUrlLink';
+import { Link, IndexLink } from 'react-router'
 import { LogAboutUs } from '../Utilities/ActivityLogging'
 
-const Header = (props) => {
+const Header = () => {
   return (
     <header className="header" role="banner">
       <div className="menu">
@@ -12,44 +10,32 @@ const Header = (props) => {
           <nav role="navigation">
             <ul>
               <li>
-                <Link to={`/${props.language}`}>{props.t("homeLinkTitle")}</Link>
+                <IndexLink to="/">Home</IndexLink>
               </li>
               <li>
-                <Link to={`/${props.language}/store`}>{props.t("storeLinkTitle")}</Link>
+                <Link to="/store">Product catalog</Link>
               </li>
               <li>
-                <Link to={`/${props.language}/articles`}>{props.t("articlesLinkTitle")}</Link>
+                <Link to="/articles">Articles</Link>
               </li>
               <li>
-                <Link to={`/${props.language}/about`} onClick={LogAboutUs}>{props.t("aboutLinkTitle")}</Link>
+                <Link to="/about" onClick={LogAboutUs}>About us</Link>
               </li>
               <li>
-                <Link to={`/${props.language}/cafes`}>{props.t("cafesLinkTitle")}</Link>
+                <Link to="/cafes">Cafes</Link>
               </li>
               <li>
-                <Link to={`/${props.language}/contacts`}>{props.t("contactsLinkTitle")}</Link>
+                <Link to="/contacts">Contact</Link>
               </li>
             </ul>
           </nav>
-          <div className="additional-menu-buttons user-menu">
-            <nav role="navigation">
-              <ul className="dropdown-items-list dropdown-desktop-visible">
-                <li>
-                  <a onClick={() => props.changeLanguage("en-US")}>English</a>
-                </li>
-                <li>
-                  <a onClick={() => props.changeLanguage("es-ES")}>Español</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
         </div>
       </div>
       <div className="header-row">
         <div className="container">
           <div className="col-xs-8 col-md-8 col-lg-4 logo">
             <h1 className="logo">
-              <Link to={`/${props.language}`} className="logo-link">Dancing Goat</Link>
+              <IndexLink to="/" className="logo-link">Dancing Goat</IndexLink>
             </h1>
           </div>
         </div>
@@ -58,4 +44,4 @@ const Header = (props) => {
   );
 }
 
-export default translate("Header")(Header);
+export default Header;

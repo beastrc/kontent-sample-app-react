@@ -1,9 +1,7 @@
 import Client from "../Client.js";
 
-import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
-
 let changeListeners = [];
-let coffees = initLanguageCodeObject();
+let coffees = [];
 let processings = [];
 let productStatuses = [];
 
@@ -13,23 +11,14 @@ let notifyChange = () => {
   });
 }
 
-let fetchCoffees = (language) => {
+let fetchCoffees = () => {
 
-  var query = Client.items()
+  Client.items()
     .type('coffee')
-    .orderParameter('elements.product_name');
-
-  if (language) {
-    query.languageParameter(language);
-  }
-
-  query.get()
+    .orderParameter('elements.product_name')
+    .get()
     .subscribe(response => {
-      if (language) {
-        coffees[language] = response.items;
-      } else {
-        coffees[defaultLanguage] = response.items;
-      }
+      coffees = response.items;
       notifyChange();
     });
 }
@@ -101,12 +90,12 @@ class CoffeeStore {
 
   // Actions
 
-  provideCoffee(coffeeSlug, language) {
-    fetchCoffees(language);
+  provideCoffee(coffeeSlug) {
+    fetchCoffees();
   }
 
-  provideCoffees(language) {
-    fetchCoffees(language);
+  provideCoffees() {
+    fetchCoffees();
   }
 
   provideProcessings() {
@@ -119,13 +108,12 @@ class CoffeeStore {
 
   // Methods
 
-  getCoffee(coffeeSlug, language) {
-    ;
-    return coffees[language || defaultLanguage].find((coffee) => coffee.urlPattern.value === coffeeSlug);
+  getCoffee(coffeeSlug) {
+    return coffees.find((coffee) => coffee.urlPattern.value === coffeeSlug);
   }
 
-  getCoffees(language) {
-    return coffees[language];
+  getCoffees() {
+    return coffees;
   }
 
   getProcessings() {

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-
-import Link from '../Components/LowerCaseUrlLink';
-import { resolveContentLink } from '../Utilities/ContentLinks'
+import { Link } from 'react-router'
 import BrewerStore from "../Stores/Brewer";
 
-let getState = (props) => {
+let getState = () => {
   return {
-    brewers: BrewerStore.getBrewers(props.language),
+    brewers: BrewerStore.getBrewers(),
     filter: BrewerStore.getFilter()
   };
 };
@@ -16,32 +14,26 @@ class Brewers extends Component {
   constructor(props) {
     super(props);
 
-    this.state = getState(props);
+    this.state = getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     BrewerStore.addChangeListener(this.onChange);
-    BrewerStore.provideBrewers(this.props.language);
+    BrewerStore.provideBrewers();
   }
 
   componentWillUnmount() {
     BrewerStore.removeChangeListener(this.onChange);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.language !== nextProps.language) {
-      BrewerStore.provideBrewers(nextProps.language);
-    }
-  }
-
   onChange() {
-    this.setState(getState(this.props));
+    this.setState(getState());
   }
 
   render() {
-    let formatPrice = (price, language) => {
-      return price.toLocaleString(language, {
+    let formatPrice = (price) => {
+      return price.toLocaleString("en-US", {
         style: "currency",
         currency: "USD"
       });
@@ -66,11 +58,11 @@ class Brewers extends Component {
     };
 
     let brewers = this.state.brewers.filter(filter).map((brewer, index) => {
-      let price = formatPrice(brewer.price.value, this.props.language);
+      let price = formatPrice(brewer.price.value);
       let name = brewer.productName.value;
       let imageLink = brewer.image.value[0].url;
       let status = renderProductStatus(brewer.productStatus);
-      let link = resolveContentLink({ type: 'brewer', url_slug: brewer.urlPattern.value }, this.props.language);
+      let link = "store/brewers/" + brewer.urlPattern.value;
 
       return (
         <div className="col-md-6 col-lg-4" key={index}>

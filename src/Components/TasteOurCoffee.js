@@ -1,39 +1,32 @@
 import React, { Component } from 'react';
-import { translate } from 'react-translate'          
-
-import Link from '../Components/LowerCaseUrlLink';
+import { Link } from 'react-router';
 import CafeStore from '../Stores/Cafe';
 
-let getState = (props) => {
+let getState = () => {
   return {
-    cafes: CafeStore.getCompanyCafes(props.language)
+    cafes: CafeStore.getCompanyCafes()
   };
 };
 
 class TasteOurCoffee extends Component {
   constructor(props) {
     super(props);
-    this.state = getState(props);
+
+    this.state = getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     CafeStore.addChangeListener(this.onChange);
-    CafeStore.provideCompanyCafes(this.props.language);
+    CafeStore.provideCompanyCafes();
   }
 
   componentWillUnmount() {
     CafeStore.removeChangeListener(this.onChange);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.language !== nextProps.language) {
-      CafeStore.provideCompanyCafes(nextProps.language);
-    }
-  }
-
   onChange() {
-    this.setState(getState(this.props));
+    this.setState(getState());
   }
 
   render() {
@@ -44,7 +37,7 @@ class TasteOurCoffee extends Component {
       return (
         <div className="col-xs-6 col-md-3" key={index}>
           <div>
-            <Link to={`/${this.props.language}/cafes`} className="ourcoffee-tile-link">
+            <Link to="/cafes" className="ourcoffee-tile-link">
               <h2 className="ourcoffee-tile-text center-text">{name}</h2>
               <span className="cafe-overlay"> </span>
               <img alt={name} className="ourcoffee-tile-image" src={imageLink} title={name} />
@@ -57,7 +50,7 @@ class TasteOurCoffee extends Component {
     return (
       <div className="row">
         <div>
-          <h1 className="title-tab">{this.props.t("title")}</h1>
+          <h1 className="title-tab">Taste Our Coffee</h1>
         </div>
         {cafes}
       </div>
@@ -65,4 +58,4 @@ class TasteOurCoffee extends Component {
   }
 }
 
-export default translate("TasteOurCoffee")(TasteOurCoffee);
+export default TasteOurCoffee;

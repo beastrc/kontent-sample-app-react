@@ -1,10 +1,8 @@
 import Client from "../Client.js";
 
-import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
-
-
 let changeListeners = [];
-let brewers = initLanguageCodeObject();
+let initialized = false;
+let brewers = [];
 
 let manufacturersInitialized = false;
 let manufacturers = [];
@@ -18,24 +16,19 @@ let notifyChange = () => {
   });
 }
 
-let fetchBrewers = (language) => {
-
-  var query = Client.items()
-    .type('brewer')
-    .orderParameter('elements.product_name');
-
-  if (language) {
-    query.languageParameter(language);
+let fetchBrewers = () => {
+  if (initialized) {
+    return;
   }
 
-  query.get()
+  Client.items()
+    .type('brewer')
+    .orderParameter('elements.product_name')
+    .get()
     .subscribe(response => {
-      if (language) {
-        brewers[language] = response.items;
-      } else {
-        brewers[defaultLanguage] = response.items;
-      }
+      brewers = response.items;
       notifyChange();
+      initialized = true;
     });
 }
 
@@ -131,12 +124,12 @@ class BrewerStore {
 
   // Actions
 
-  provideBrewer(brewerSlug, language) {
-    fetchBrewers(language);
+  provideBrewer(brewerSlug) {
+    fetchBrewers();
   }
 
-  provideBrewers(language) {
-    fetchBrewers(language);
+  provideBrewers() {
+    fetchBrewers();
   }
 
   provideManufacturers() {
@@ -149,12 +142,12 @@ class BrewerStore {
 
   // Methods
 
-  getBrewer(brewerSlug, language) {
-    return brewers[language || defaultLanguage].find((brewer) => brewer.urlPattern.value === brewerSlug);
+  getBrewer(brewerSlug) {
+    return brewers.find((brewer) => brewer.urlPattern.value === brewerSlug);
   }
 
-  getBrewers(language) {
-    return brewers[language];
+  getBrewers() {
+    return brewers;
   }
 
   getManufacturers() {

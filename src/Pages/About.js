@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import FactStore from '../Stores/Fact';
 import RichTextElement from '../Components/RichTextElement';
 
-let getState = (props) => {
+let getState = () => {
   return {
-    facts: FactStore.getFacts(props.language)
+    facts: FactStore.getFacts()
   };
 };
 
@@ -12,27 +12,21 @@ class About extends Component {
   constructor(props) {
     super(props);
 
-    this.state = getState(props);
+    this.state = getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     FactStore.addChangeListener(this.onChange);
-    FactStore.provideFacts(this.props.language);
+    FactStore.provideFacts();
   }
 
   componentWillUnmount() {
     FactStore.removeChangeListener(this.onChange);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.language !== nextProps.language) {
-      FactStore.provideFacts(nextProps.language);
-    }
-  }
-
   onChange() {
-    this.setState(getState(this.props));
+    this.setState(getState());
   }
 
   render() {

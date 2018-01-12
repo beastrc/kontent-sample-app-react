@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { translate } from 'react-translate'
-
 import BrewerStore from "../Stores/Brewer";
 
 let priceRanges = [
@@ -47,11 +45,11 @@ class BrewerFilter extends Component {
 
     return (
       <aside className="col-md-4 col-lg-3 product-filter">
-        <h4>{this.props.t("manufacturerTitle")}</h4>
+        <h4>Manufacturer</h4>
         <ManufacturerFilter manufacturers={manufacturers} filter={filter}/>
-        <h4>{this.props.t("priceTitle")}</h4>
-        <PriceRangeFilter priceRanges={priceRanges} filter={filter} language={this.props.language}/>
-        <h4>{this.props.t("statusTitle")}</h4>
+        <h4>Price</h4>
+        <PriceRangeFilter priceRanges={priceRanges} filter={filter}/>
+        <h4>Status</h4>
         <ProductStatusFilter productStatuses={productStatuses} filter={filter}/>
       </aside>
     );
@@ -93,7 +91,7 @@ const ManufacturerFilterItem = (props) => {
 const PriceRangeFilter = (props) => {
   let filterItems = props.priceRanges.map((priceRange, index) => {
     return (
-      <PriceRangeFilterItem language={props.language} priceRange={priceRange} id={"PriceRange-" + index} filter={props.filter} key={index}/>
+      <PriceRangeFilterItem priceRange={priceRange} id={"PriceRange-" + index} filter={props.filter} key={index}/>
     );
   });
 
@@ -106,8 +104,8 @@ const PriceRangeFilter = (props) => {
 
 const PriceRangeFilterItem = (props) => {
   let checked = props.filter.priceRanges.findIndex((x) => x.min === props.priceRange.min && x.max === props.priceRange.max) >= 0;
-  let formatPrice = (price, language) => {
-    return price.toLocaleString(language, {
+  let formatPrice = (price) => {
+    return price.toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
       maximumFractionDigits: 2
@@ -117,10 +115,11 @@ const PriceRangeFilterItem = (props) => {
     props.filter.togglePriceRange(props.priceRange);
     BrewerStore.setFilter(props.filter);
   }
+
   return (
     <span className="checkbox js-postback">
       <input id={props.id} type="checkbox" checked={checked} onChange={onChange}/>
-      <label htmlFor={props.id}>{formatPrice(props.priceRange.min, props.language) + " – " + formatPrice(props.priceRange.max, props.language)}</label>
+      <label htmlFor={props.id}>{formatPrice(props.priceRange.min) + " – " + formatPrice(props.priceRange.max)}</label>
     </span>
   );
 }
@@ -157,4 +156,4 @@ const ProductStatusFilterItem = (props) => {
   );
 }
 
-export default translate("BrewerFilter")(BrewerFilter);
+export default BrewerFilter;

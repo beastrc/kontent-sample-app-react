@@ -33,9 +33,7 @@ export class MapContainer extends Component {
         if (nextState.reloadRequired || !_.isEqual(this.props.cafesAddresses, nextProps.cafesAddresses)) {
             this.reloadMarkers(nextProps.cafesAddresses);
         }
-    }
 
-    componentWillReceiveProps(nextProps){
         this.focusOnAddress(nextProps.focusOnAddress);
     }
 
@@ -81,10 +79,6 @@ export class MapContainer extends Component {
                 let geocoder = new window.google.maps.Geocoder();
                 geocoder.geocode({ 'address': address }, this.translateAddressAndFocus.bind(this, address));
             }
-        } else if (address === undefined && this.state.scrollTo !== undefined) {
-            this.setState({
-                scrollTo: undefined
-            });
         }
     }
 

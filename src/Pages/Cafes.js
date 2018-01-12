@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { translate } from 'react-translate'
-
 import CafeStore from '../Stores/Cafe';
 
-let getState = (props) => {
+let getState = () => {
   return {
-    companyCafes: CafeStore.getCompanyCafes(props.language),
-    partnerCafes: CafeStore.getPartnerCafes(props.language)
+    companyCafes: CafeStore.getCompanyCafes(),
+    partnerCafes: CafeStore.getPartnerCafes()
   };
 };
 
@@ -15,29 +13,22 @@ class Cafes extends Component {
   constructor(props) {
     super(props);
 
-    this.state = getState(props);
+    this.state = getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     CafeStore.addChangeListener(this.onChange);
-    CafeStore.provideCompanyCafes(this.props.language);
-    CafeStore.providePartnerCafes(this.props.language);
+    CafeStore.provideCompanyCafes();
+    CafeStore.providePartnerCafes();
   }
 
   componentWillUnmount() {
     CafeStore.removeChangeListener(this.onChange);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.language !== nextProps.language) {
-      CafeStore.provideCompanyCafes(nextProps.language);
-      CafeStore.providePartnerCafes(nextProps.language);
-    }
-  }
-
   onChange() {
-    this.setState(getState(this.props));
+    this.setState(getState());
   }
 
   render() {
@@ -68,9 +59,9 @@ class Cafes extends Component {
             <div className="cafe-image-tile-content">
               <h3 className="cafe-image-tile-name">{model.name}</h3>
               <address className="cafe-tile-address">
-                <span name={model.name} className="cafe-tile-address-anchor">
+                <a name={model.name} className="cafe-tile-address-anchor">
                   {model.street}, {model.city}<br />{model.zipCode}, {model.countryWithState}
-                </span>
+                </a>
               </address>
               <p>{model.phone}</p>
             </div>
@@ -104,11 +95,11 @@ class Cafes extends Component {
 
     return (
       <div className="container">
-        <h2>{this.props.t("ourCafesTitle")}</h2>
+        <h2>Our cafes</h2>
         <div className="row">
           {companyCafes}
         </div>
-        <h2>{this.props.t("partnerCafesTitle")}</h2>
+        <h2>Other places where you can drink our coffee</h2>
         <div className="row">
           {partnerCafes}
         </div>
@@ -117,4 +108,4 @@ class Cafes extends Component {
   }
 }
 
-export default translate("Cafes")(Cafes);
+export default Cafes;
