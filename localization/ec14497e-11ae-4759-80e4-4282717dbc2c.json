@@ -5,7 +5,11 @@
                  },
         "elements":  {
                          "title":  "Roasting premium coffee",
-                         "image":  "",
+                         "image":  [
+                                       {
+                                           "id":  "55caecc2-400c-4ee3-91c3-0f7f067414ec"
+                                       }
+                                   ],
                          "marketing_message":  "\u003cp\u003eDiscover the fascinating world of Dancing Goat high-quality coffee and you will never miss a single coffee break again.\u003c/p\u003e"
                      },
         "language":  {
@@ -19,8 +23,12 @@
                  },
         "elements":  {
                          "title":  "Café tostado premium",
-                         "image":  "",
-                         "marketing_message":  "\u003cp\u003eDiscover the fascinating world of Dancing Goat high-quality coffee and you will never miss a single coffee break again.\u003c/p\u003e"
+                         "image":  [
+                                       {
+                                           "id":  "55caecc2-400c-4ee3-91c3-0f7f067414ec"
+                                       }
+                                   ],
+                         "marketing_message":  "\u003cp\u003eDescubre el fascinante mundo de Dancing Goat café de la mas alta calidad. Nunca más perderás una sola oportunidad de disfrutar un buen café.\u003c/p\u003e"
                      },
         "language":  {
                          "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"

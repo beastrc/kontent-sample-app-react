@@ -5,8 +5,12 @@
                  },
         "elements":  {
                          "title":  "Pruebe Nuestro Café Premium",
-                         "image":  "",
-                         "marketing_message":  "\u003cp\u003eGet a free sample of any coffee we offer and choose a flavor that fits you best. Perfect as it is, that’s Dancing goat\u0027s coffee.\u003c/p\u003e"
+                         "image":  [
+                                       {
+                                           "id":  "8787344e-4d7b-4c17-9e34-3fabb2a5ec92"
+                                       }
+                                   ],
+                         "marketing_message":  "\u003cp\u003eObtenga una muestra gratuita de cualquier café que ofrecemos y elija el sabor que mas le guste.\u003cbr/\u003e\nEl cafe Dancing Goat is perfecto asi como es.\u0026nbsp;\u003c/p\u003e"
                      },
         "language":  {
                          "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"
@@ -19,7 +23,11 @@
                  },
         "elements":  {
                          "title":  "Try Our Premium Coffee",
-                         "image":  "",
+                         "image":  [
+                                       {
+                                           "id":  "8787344e-4d7b-4c17-9e34-3fabb2a5ec92"
+                                       }
+                                   ],
                          "marketing_message":  "\u003cp\u003eGet a free sample of any coffee we offer and choose a flavor that fits you best. Perfect as it is, that’s Dancing goat\u0027s coffee.\u003c/p\u003e"
                      },
         "language":  {

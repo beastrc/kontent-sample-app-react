@@ -13,16 +13,42 @@
                          "metadata__meta_description":  "Learn about the techniques of processing the products of coffee plants. Different methods are used in different parts of the world.",
                          "metadata__meta_title":  "Coffee processing techniques",
                          "metadata__og_description":  "Learn about the techniques of processing the products of coffee plants. Different methods are used in different parts of the world.",
-                         "metadata__og_image":  "@{id=40edae81-37df-4d5e-8624-e2f7cfc50427}",
+                         "metadata__og_image":  [
+                                                    {
+                                                        "id":  "40edae81-37df-4d5e-8624-e2f7cfc50427"
+                                                    }
+                                                ],
                          "metadata__og_title":  "Coffee processing techniques",
                          "metadata__twitter_creator":  "@kenticoCloud",
                          "metadata__twitter_description":  "Learn about the techniques of processing the products of coffee plants. Different methods are used in different parts of the world.",
-                         "metadata__twitter_image":  "@{id=40edae81-37df-4d5e-8624-e2f7cfc50427}",
+                         "metadata__twitter_image":  [
+                                                         {
+                                                             "id":  "40edae81-37df-4d5e-8624-e2f7cfc50427"
+                                                         }
+                                                     ],
                          "metadata__twitter_site":  "Dancing Goat",
                          "metadata__twitter_title":  "Coffee processing techniques",
-                         "personas":  "@{id=4fa27320-c363-3ebe-5ab5-b531300f053f} @{id=208a9095-1b92-10da-7627-75ae311935cf}",
-                         "related_articles":  "@{id=f4b3fc05-e988-4dae-9ac1-a94aba566474} @{id=3120ec15-a4a2-47ec-8ccd-c85ac8ac5ba5}",
-                         "teaser_image":  "@{id=40edae81-37df-4d5e-8624-e2f7cfc50427}",
+                         "personas":  [
+                                          {
+                                              "id":  "4fa27320-c363-3ebe-5ab5-b531300f053f"
+                                          },
+                                          {
+                                              "id":  "208a9095-1b92-10da-7627-75ae311935cf"
+                                          }
+                                      ],
+                         "related_articles":  [
+                                                  {
+                                                      "id":  "f4b3fc05-e988-4dae-9ac1-a94aba566474"
+                                                  },
+                                                  {
+                                                      "id":  "3120ec15-a4a2-47ec-8ccd-c85ac8ac5ba5"
+                                                  }
+                                              ],
+                         "teaser_image":  [
+                                              {
+                                                  "id":  "40edae81-37df-4d5e-8624-e2f7cfc50427"
+                                              }
+                                          ],
                          "url_pattern":  "coffee-processing-techniques"
                      },
         "language":  {
@@ -44,16 +70,42 @@
                          "metadata__meta_description":  "Learn about the techniques of processing the products of coffee plants. Different methods are used in different parts of the world.",
                          "metadata__meta_title":  "Coffee processing techniques",
                          "metadata__og_description":  "Learn about the techniques of processing the products of coffee plants. Different methods are used in different parts of the world.",
-                         "metadata__og_image":  "@{id=40edae81-37df-4d5e-8624-e2f7cfc50427}",
+                         "metadata__og_image":  [
+                                                    {
+                                                        "id":  "40edae81-37df-4d5e-8624-e2f7cfc50427"
+                                                    }
+                                                ],
                          "metadata__og_title":  "Coffee processing techniques",
                          "metadata__twitter_creator":  "@kenticoCloud",
                          "metadata__twitter_description":  "Learn about the techniques of processing the products of coffee plants. Different methods are used in different parts of the world.",
-                         "metadata__twitter_image":  "@{id=40edae81-37df-4d5e-8624-e2f7cfc50427}",
+                         "metadata__twitter_image":  [
+                                                         {
+                                                             "id":  "40edae81-37df-4d5e-8624-e2f7cfc50427"
+                                                         }
+                                                     ],
                          "metadata__twitter_site":  "Dancing Goat",
                          "metadata__twitter_title":  "Coffee processing techniques",
-                         "personas":  "@{id=4fa27320-c363-3ebe-5ab5-b531300f053f} @{id=208a9095-1b92-10da-7627-75ae311935cf}",
-                         "related_articles":  "@{id=f4b3fc05-e988-4dae-9ac1-a94aba566474} @{id=3120ec15-a4a2-47ec-8ccd-c85ac8ac5ba5}",
-                         "teaser_image":  "@{id=40edae81-37df-4d5e-8624-e2f7cfc50427}",
+                         "personas":  [
+                                          {
+                                              "id":  "4fa27320-c363-3ebe-5ab5-b531300f053f"
+                                          },
+                                          {
+                                              "id":  "208a9095-1b92-10da-7627-75ae311935cf"
+                                          }
+                                      ],
+                         "related_articles":  [
+                                                  {
+                                                      "id":  "f4b3fc05-e988-4dae-9ac1-a94aba566474"
+                                                  },
+                                                  {
+                                                      "id":  "3120ec15-a4a2-47ec-8ccd-c85ac8ac5ba5"
+                                                  }
+                                              ],
+                         "teaser_image":  [
+                                              {
+                                                  "id":  "40edae81-37df-4d5e-8624-e2f7cfc50427"
+                                              }
+                                          ],
                          "url_pattern":  "coffee-processing-techniques"
                      },
         "language":  {

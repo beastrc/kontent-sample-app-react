@@ -11,7 +11,9 @@
                      "phone":  "07-3403-8884",
                      "email":  "Brisbane@localhost.local",
                      "photo":  [
-                                   "@{id=8fad2e2c-1351-4bfc-be12-007582d61c48}"
+                                   {
+                                       "id":  "8fad2e2c-1351-4bfc-be12-007582d61c48"
+                                   }
                                ]
                  },
     "language":  {

@@ -11,7 +11,11 @@
                          "zip_code":  "SW3 5UR",
                          "phone":  "0173-733-6375",
                          "email":  "London@localhost.local",
-                         "photo":  ""
+                         "photo":  [
+                                       {
+                                           "id":  "8fccb3b9-a507-48cc-bccd-0639d7fb69ec"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "00000000-0000-0000-0000-000000000000"
@@ -30,7 +34,11 @@
                          "zip_code":  "SW3 5UR",
                          "phone":  "0173-733-6375",
                          "email":  "London@localhost.local",
-                         "photo":  ""
+                         "photo":  [
+                                       {
+                                           "id":  "8fccb3b9-a507-48cc-bccd-0639d7fb69ec"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"

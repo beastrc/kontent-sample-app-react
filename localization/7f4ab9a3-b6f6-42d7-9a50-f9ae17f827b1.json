@@ -5,7 +5,11 @@
                  },
         "elements":  {
                          "video_id":  "2Ao5b6uqI40",
-                         "video_host":  ""
+                         "video_host":  [
+                                            {
+                                                "id":  "523e6231-8d80-a158-3601-dffde4e64a78"
+                                            }
+                                        ]
                      },
         "language":  {
                          "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"
@@ -18,7 +22,11 @@
                  },
         "elements":  {
                          "video_id":  "2Ao5b6uqI40",
-                         "video_host":  ""
+                         "video_host":  [
+                                            {
+                                                "id":  "523e6231-8d80-a158-3601-dffde4e64a78"
+                                            }
+                                        ]
                      },
         "language":  {
                          "id":  "00000000-0000-0000-0000-000000000000"

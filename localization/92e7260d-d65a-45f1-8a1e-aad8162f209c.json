@@ -11,7 +11,11 @@
                          "zip_code":  "28014",
                          "phone":  "915-546-202",
                          "email":  "Madrid@localhost.local",
-                         "photo":  ""
+                         "photo":  [
+                                       {
+                                           "id":  "cb9ca475-61f1-4bc5-8a7d-e524bf4aa715"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "00000000-0000-0000-0000-000000000000"
@@ -30,7 +34,11 @@
                          "zip_code":  "28014",
                          "phone":  "915-546-202",
                          "email":  "Madrid@localhost.local",
-                         "photo":  ""
+                         "photo":  [
+                                       {
+                                           "id":  "cb9ca475-61f1-4bc5-8a7d-e524bf4aa715"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"

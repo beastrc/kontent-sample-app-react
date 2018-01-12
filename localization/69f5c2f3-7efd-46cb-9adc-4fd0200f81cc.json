@@ -11,7 +11,11 @@
                          "zip_code":  "VIC 3002",
                          "phone":  "03-9297-1622",
                          "email":  "Melbourne@localhost.local",
-                         "photo":  "@{id=a8d0a4d4-4f74-4514-b2d1-3189d81e7e23}"
+                         "photo":  [
+                                       {
+                                           "id":  "a8d0a4d4-4f74-4514-b2d1-3189d81e7e23"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"
@@ -30,7 +34,11 @@
                          "zip_code":  "VIC 3002",
                          "phone":  "03-9297-1622",
                          "email":  "Melbourne@localhost.local",
-                         "photo":  "@{id=a8d0a4d4-4f74-4514-b2d1-3189d81e7e23}"
+                         "photo":  [
+                                       {
+                                           "id":  "a8d0a4d4-4f74-4514-b2d1-3189d81e7e23"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "00000000-0000-0000-0000-000000000000"

@@ -5,8 +5,16 @@
                  },
         "elements":  {
                          "tweet_link":  "https://twitter.com/DeCubaNorwich/status/879265763978358784",
-                         "display_options":  "",
-                         "theme":  ""
+                         "display_options":  [
+                                                 {
+                                                     "id":  "6fe63b4b-6df6-407f-38dc-4144b9ca29dc"
+                                                 }
+                                             ],
+                         "theme":  [
+                                       {
+                                           "id":  "fe596c82-45fb-7022-a4ae-3147bf14acba"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "00000000-0000-0000-0000-000000000000"
@@ -19,8 +27,16 @@
                  },
         "elements":  {
                          "tweet_link":  "https://twitter.com/DeCubaNorwich/status/879265763978358784",
-                         "display_options":  "",
-                         "theme":  ""
+                         "display_options":  [
+                                                 {
+                                                     "id":  "6fe63b4b-6df6-407f-38dc-4144b9ca29dc"
+                                                 }
+                                             ],
+                         "theme":  [
+                                       {
+                                           "id":  "fe596c82-45fb-7022-a4ae-3147bf14acba"
+                                       }
+                                   ]
                      },
         "language":  {
                          "id":  "d1f95fde-af02-b3b5-bd9e-f232311ccab8"

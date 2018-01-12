@@ -4,17 +4,35 @@
                      "id":  "ef23e568-6aa2-42cd-a120-7823c0ef19f7"
                  },
         "elements":  {
-                         "facts":  "  ",
-                         "metadata__meta_description":  "Since Dancing Goat\u0027s origin in 1969, we have been striving to do things right. Learn how we do things at Dancing Goat Coffee!",
-                         "metadata__meta_title":  "About Dancing Goat Coffee",
-                         "metadata__og_description":  "Since Dancing Goat\u0027s origin in 1969, we have been striving to do things right. Learn how we do things at Dancing Goat Coffee!",
-                         "metadata__og_image":  "",
-                         "metadata__og_title":  "About Dancing Goat Coffee",
-                         "metadata__twitter_creator":  "@kenticoCloud",
-                         "metadata__twitter_description":  "Since Dancing Goat\u0027s origin in 1969, we have been striving to do things right. Learn how we do things at Dancing Goat Coffee!",
-                         "metadata__twitter_image":  "",
+                         "facts":  [
+                                       {
+                                           "id":  "a4aad96b-3f5d-41a9-b2c7-e0132bd533ec"
+                                       },
+                                       {
+                                           "id":  "18689ab0-e5ff-4ca5-bd13-ae3b5997c2d9"
+                                       },
+                                       {
+                                           "id":  "1c303d3b-27a9-4827-b0c0-fb05da17ccbc"
+                                       }
+                                   ],
+                         "metadata__meta_description":  "Desde el origen de Dancing Goat en 1969, nos hemos esforzado por hacer las cosas bien. ¡Aprende cómo hacemos las cosas en Dancing Goat Coffee!",
+                         "metadata__meta_title":  "Acerca de Dancing Goat Coffee",
+                         "metadata__og_description":  "Desde el origen de Dancing Goat en 1969, nos hemos esforzado por hacer las cosas bien. ¡Aprende cómo hacemos las cosas en Dancing Goat Coffee!",
+                         "metadata__og_image":  [
+                                                    {
+                                                        "id":  "f6daed1f-3f3b-4036-a9c7-9519359b9601"
+                                                    }
+                                                ],
+                         "metadata__og_title":  "Acerca de Dancing Goat Coffee",
+                         "metadata__twitter_creator":  "@kenticocloud",
+                         "metadata__twitter_description":  "Desde el origen de Dancing Goat en 1969, nos hemos esforzado por hacer las cosas bien. ¡Aprende cómo hacemos las cosas en Dancing Goat Coffee!",
+                         "metadata__twitter_image":  [
+                                                         {
+                                                             "id":  "f6daed1f-3f3b-4036-a9c7-9519359b9601"
+                                                         }
+                                                     ],
                          "metadata__twitter_site":  "Dancing Goat",
-                         "metadata__twitter_title":  "About Dancing Goat Coffee",
+                         "metadata__twitter_title":  "Acerca de Dancing Goat Coffee",
                          "url_pattern":  "about-us"
                      },
         "language":  {
@@ -27,15 +45,33 @@
                      "id":  "ef23e568-6aa2-42cd-a120-7823c0ef19f7"
                  },
         "elements":  {
-                         "facts":  "  ",
+                         "facts":  [
+                                       {
+                                           "id":  "a4aad96b-3f5d-41a9-b2c7-e0132bd533ec"
+                                       },
+                                       {
+                                           "id":  "18689ab0-e5ff-4ca5-bd13-ae3b5997c2d9"
+                                       },
+                                       {
+                                           "id":  "1c303d3b-27a9-4827-b0c0-fb05da17ccbc"
+                                       }
+                                   ],
                          "metadata__meta_description":  "Since Dancing Goat\u0027s origin in 1969, we have been striving to do things right. Learn how we do things at Dancing Goat Coffee!",
                          "metadata__meta_title":  "About Dancing Goat Coffee",
                          "metadata__og_description":  "Since Dancing Goat\u0027s origin in 1969, we have been striving to do things right. Learn how we do things at Dancing Goat Coffee!",
-                         "metadata__og_image":  "",
+                         "metadata__og_image":  [
+                                                    {
+                                                        "id":  "f6daed1f-3f3b-4036-a9c7-9519359b9601"
+                                                    }
+                                                ],
                          "metadata__og_title":  "About Dancing Goat Coffee",
                          "metadata__twitter_creator":  "@kenticoCloud",
                          "metadata__twitter_description":  "Since Dancing Goat\u0027s origin in 1969, we have been striving to do things right. Learn how we do things at Dancing Goat Coffee!",
-                         "metadata__twitter_image":  "",
+                         "metadata__twitter_image":  [
+                                                         {
+                                                             "id":  "f6daed1f-3f3b-4036-a9c7-9519359b9601"
+                                                         }
+                                                     ],
                          "metadata__twitter_site":  "Dancing Goat",
                          "metadata__twitter_title":  "About Dancing Goat Coffee",
                          "url_pattern":  "about-us"
