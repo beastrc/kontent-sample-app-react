@@ -50,7 +50,7 @@ const initLanguageCodeObject = (object) => {
         object[language] = [];
     })
 
-    return object;
+    return object
 }
 
 const getLanguageCode = (match) => {
@@ -66,7 +66,7 @@ const getLanguageCode = (match) => {
     return defaultLanguage;
 }
 
-export {
+module.exports = {
     languageCodes,
     languageCodesLowerCase,
     dateFormats,

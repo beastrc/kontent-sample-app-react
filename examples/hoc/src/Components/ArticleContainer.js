@@ -14,7 +14,7 @@ class ArticleContainer extends Component {
 
     componentDidMount() {
         this.subscription = this.props.client.item(this.props.codeName)
-            .getObservable()
+            .get()
             .subscribe(response => {
                 this.setState({
                     article: response.item

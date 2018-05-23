@@ -11,7 +11,7 @@ const Header = (props) => {
     <header className="header" role="banner">
       <div className="menu">
         <div className="container">
-          <nav>
+          <nav role="navigation">
             <ul>
               <li>
                 <Link to={`/${props.language}`}>{props.t("homeLinkTitle")}</Link>
@@ -42,16 +42,16 @@ const Header = (props) => {
             </ul>
           </nav>
           <div className="additional-menu-buttons user-menu">
-            <nav>
+            <nav role="navigation">
               <ul className="dropdown-items-list dropdown-desktop-visible">
                 <li>
                   <a onClick={() =>
-                    window.location.pathname.endsWith('acerca-de') ? props.changeLanguage(englishCode, "/about-us") : props.changeLanguage(englishCode)
+                    location.pathname.endsWith('acerca-de') ? props.changeLanguage(englishCode, "/about-us") : props.changeLanguage(englishCode)
                   }>English</a>
                 </li>
                 <li>
                   <a onClick={() =>
-                    window.location.pathname.endsWith('about-us') ? props.changeLanguage(spanishCode, "/acerca-de") : props.changeLanguage(spanishCode)
+                    location.pathname.endsWith('about-us') ? props.changeLanguage(spanishCode, "/acerca-de") : props.changeLanguage(spanishCode)
                   }>Español</a>
                 </li>
               </ul>
