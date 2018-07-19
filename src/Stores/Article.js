@@ -1,12 +1,11 @@
 import Client from '../Client.js';
 import { SortOrder } from 'kentico-cloud-delivery';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes';
+
+import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
 
 let articleList = initLanguageCodeObject();
 let articleDetails = initLanguageCodeObject();
-const unsubscribe = new Subject();
+
 let changeListeners = [];
 
 let notifyChange = () => {
@@ -31,7 +30,6 @@ class ArticleStore {
     }
 
     query.getObservable()
-      .pipe(takeUntil(unsubscribe))
       .subscribe(response => {
         if (!response.isEmpty) {
           if (language) {
@@ -55,7 +53,6 @@ class ArticleStore {
     }
 
     query.getObservable()
-      .pipe(takeUntil(unsubscribe))
       .subscribe(response => {
         if (language) {
           articleList[language] = response.items;
@@ -94,11 +91,6 @@ class ArticleStore {
     changeListeners = changeListeners.filter((element) => {
       return element !== listener;
     });
-  }
-
-  unsubscribe() {
-    unsubscribe.next();
-    unsubscribe.complete();
   }
 
 }

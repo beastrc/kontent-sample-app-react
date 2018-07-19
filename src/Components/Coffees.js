@@ -25,7 +25,6 @@ class Coffees extends Component {
 
   componentWillUnmount() {
     CoffeeStore.removeChangeListener(this.onChange);
-    CoffeeStore.unsubscribe();
   }
 
   componentWillReceiveProps(nextProps) {

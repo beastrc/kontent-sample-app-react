@@ -30,7 +30,6 @@ class LatestArticles extends Component {
 
   componentWillUnmount() {
     ArticleStore.removeChangeListener(this.onChange);
-    ArticleStore.unsubscribe();
   }
 
   componentWillReceiveProps(nextProps) {

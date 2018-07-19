@@ -1,9 +1,8 @@
 import Client from "../Client.js";
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+
 import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
 
-const unsubscribe = new Subject();
+
 let changeListeners = [];
 let brewers = initLanguageCodeObject();
 
@@ -30,7 +29,6 @@ let fetchBrewers = (language) => {
   }
 
   query.getObservable()
-    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       if (language) {
         brewers[language] = response.items;
@@ -48,7 +46,6 @@ let fetchManufacturers = () => {
 
   Client.taxonomy("manufacturer")
     .getObservable()
-    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       manufacturers = response.taxonomy.terms;
       notifyChange();
@@ -63,7 +60,6 @@ let fetchProductStatuses = () => {
 
   Client.taxonomy("product_status")
     .getObservable()
-    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       productStatuses = response.taxonomy.terms;
       notifyChange();
@@ -188,11 +184,6 @@ class BrewerStore {
     changeListeners = changeListeners.filter((element) => {
       return element !== listener;
     });
-  }
-
-  unsubscribe() {
-    unsubscribe.next();
-    unsubscribe.complete();
   }
 
 }

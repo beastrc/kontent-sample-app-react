@@ -1,9 +1,7 @@
 import Client from "../Client.js";
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+
 import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
 
-const unsubscribe = new Subject();
 let changeListeners = [];
 let facts = initLanguageCodeObject();
 
@@ -26,7 +24,6 @@ let fetchFacts = (language, urlSlug) => {
   }
 
   query.getObservable()
-    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       if (language) {
         facts[language] = response.items[0].facts;
@@ -61,11 +58,6 @@ class FactStore {
     changeListeners = changeListeners.filter((element) => {
       return element !== listener;
     });
-  }
-
-  unsubscribe() {
-    unsubscribe.next();
-    unsubscribe.complete();
   }
 
 }

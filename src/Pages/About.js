@@ -23,7 +23,6 @@ class About extends Component {
 
   componentWillUnmount() {
     FactStore.removeChangeListener(this.onChange);
-    FactStore.unsubscribe();
   }
 
   componentWillReceiveProps(nextProps) {
