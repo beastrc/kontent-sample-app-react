@@ -10,7 +10,6 @@ const MessageBox = (props) => {
   return (
     <div id="message-box" className="container message">
       <section className="messages">
-        <h2 className="hidden">Message</h2>
         <table className="user-message message-info">
           <tbody><tr>
             <td className="message-icon">
@@ -25,7 +24,6 @@ const MessageBox = (props) => {
           </tbody>
         </table>
       </section>
-
     </div>
   );
 }
