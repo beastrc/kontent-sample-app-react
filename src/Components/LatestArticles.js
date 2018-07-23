@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ArticleStore } from '../Stores/Article';
+import ArticleStore from '../Stores/Article';
 import dateFormat from 'dateformat';
 import { translate } from 'react-translate'
 
@@ -30,6 +30,7 @@ class LatestArticles extends Component {
 
   componentWillUnmount() {
     ArticleStore.removeChangeListener(this.onChange);
+    ArticleStore.unsubscribe();
   }
 
   componentWillReceiveProps(nextProps) {

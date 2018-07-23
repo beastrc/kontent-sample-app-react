@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ArticleStore } from '../Stores/Article';
+import ArticleStore from '../Stores/Article';
 import Link from '../Components/LowerCaseUrlLink'
 import dateFormat from 'dateformat';
 
@@ -30,6 +30,7 @@ class Articles extends Component {
 
   componentWillUnmount() {
     ArticleStore.removeChangeListener(this.onChange);
+    ArticleStore.unsubscribe();
   }
 
   componentWillReceiveProps(nextProps) {

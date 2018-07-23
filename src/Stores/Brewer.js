@@ -1,13 +1,11 @@
-import { Client } from "../Client.js";
-
+import Client from "../Client.js";
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
 
-
+let unsubscribe = new Subject();
 let changeListeners = [];
-const resetStore = () => ({
-  brewers: initLanguageCodeObject()
-});
-let { brewers } = resetStore();
+let brewers = initLanguageCodeObject();
 
 let manufacturersInitialized = false;
 let manufacturers = [];
@@ -32,6 +30,7 @@ let fetchBrewers = (language) => {
   }
 
   query.getObservable()
+    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       if (language) {
         brewers[language] = response.items;
@@ -49,6 +48,7 @@ let fetchManufacturers = () => {
 
   Client.taxonomy("manufacturer")
     .getObservable()
+    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       manufacturers = response.taxonomy.terms;
       notifyChange();
@@ -63,6 +63,7 @@ let fetchProductStatuses = () => {
 
   Client.taxonomy("product_status")
     .getObservable()
+    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       productStatuses = response.taxonomy.terms;
       notifyChange();
@@ -130,7 +131,7 @@ export class Filter {
 
 let brewerFilter = new Filter();
 
-class Brewer {
+class BrewerStore {
 
   // Actions
 
@@ -189,11 +190,12 @@ class Brewer {
     });
   }
 
+  unsubscribe() {
+    unsubscribe.next();
+    unsubscribe.complete();
+    unsubscribe = new Subject();
+  }
+
 }
 
-let BrewerStore = new Brewer();
-
-export {
-  BrewerStore,
-  resetStore
-}
+export default new BrewerStore();

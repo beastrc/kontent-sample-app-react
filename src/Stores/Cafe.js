@@ -1,20 +1,16 @@
-import { Client } from "../Client.js";
-
+import Client from "../Client.js";
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { initLanguageCodeObject, defaultLanguage, languageCodes } from '../Utilities/LanguageCodes'
 
+let unsubscribe = new Subject();
 let changeListeners = [];
-const resetStore = () => {
-  let languageInitialized = {};
-  languageCodes.forEach((language) => {
-    languageInitialized[language] = false;
-  });
-  
-  return {
-    cafes: initLanguageCodeObject(),
-    languageInitialized: languageInitialized
-  }
-};
-let { cafes, languageInitialized } = resetStore();
+let cafes = initLanguageCodeObject();
+let languageInitialized = {};
+languageCodes.forEach((language) => {
+  languageInitialized[language] = false;
+})
+
 
 let notifyChange = (newlanguage) => {
   changeListeners.forEach((listener) => {
@@ -23,7 +19,7 @@ let notifyChange = (newlanguage) => {
 }
 
 let fetchCafes = (language) => {
-  if (languageInitialized[language]) {
+  if(languageInitialized[language]){
     notifyChange(language);
     return;
   }
@@ -36,6 +32,7 @@ let fetchCafes = (language) => {
   }
 
   query.getObservable()
+    .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       if (language) {
         cafes[language] = response.items;
@@ -47,7 +44,7 @@ let fetchCafes = (language) => {
     });
 }
 
-class Cafe {
+class CafeStore {
 
   // Actions
 
@@ -81,12 +78,12 @@ class Cafe {
     });
   }
 
+  unsubscribe() {
+    unsubscribe.next();
+    unsubscribe.complete();
+    unsubscribe = new Subject();
+  }
+
 }
 
-let CafeStore = new Cafe();
-
-export {
-  CafeStore,
-  resetStore
-}
-
+export default new CafeStore();
