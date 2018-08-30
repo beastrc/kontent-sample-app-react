@@ -2,7 +2,6 @@ import { Client } from "../Client.js";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
-import { spinnerService } from '@chevtek/react-spinners';
 
 let unsubscribe = new Subject();
 let changeListeners = [];
@@ -46,16 +45,12 @@ class Fact {
   // Actions
 
   provideFacts(language, urlSlug) {
-    if (spinnerService.isShowing('apiSpinner') === false) {
-      spinnerService.show('apiSpinner');
-    }
     fetchFacts(language, urlSlug);
   }
 
   // Methods
 
   getFacts(language) {
-    spinnerService.hide('apiSpinner');
     return facts[language];
   }
 

@@ -3,7 +3,6 @@ import { SortOrder } from 'kentico-cloud-delivery';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes';
-import { spinnerService } from '@chevtek/react-spinners';
 
 let unsubscribe = new Subject();
 const resetStore = () => ({
@@ -35,10 +34,6 @@ class Article {
       query.languageParameter(language);
     }
 
-    if (spinnerService.isShowing('apiSpinner') === false) {
-      spinnerService.show('apiSpinner');
-    }
-
     query.getObservable()
       .pipe(takeUntil(unsubscribe))
       .subscribe(response => {
@@ -53,7 +48,7 @@ class Article {
       })
   }
 
-  provideArticles(language) {
+  provideArticles(count, language) {
 
     let query = Client.items()
       .type('article')
@@ -61,10 +56,6 @@ class Article {
 
     if (language) {
       query.languageParameter(language);
-    }
-
-    if (spinnerService.isShowing('apiSpinner') === false) {
-      spinnerService.show('apiSpinner');
     }
 
     query.getObservable()
@@ -81,16 +72,15 @@ class Article {
 
   // Methods
   getArticle(articleId, language) {
-    spinnerService.hide('apiSpinner');
     if (language) {
       return articleDetails[language][articleId];
     } else {
       return articleDetails[defaultLanguage][articleId];
     }
+
   }
 
   getArticles(count, language) {
-    spinnerService.hide('apiSpinner');
     if (language) {
       return articleList[language].slice(0, count);
     }
