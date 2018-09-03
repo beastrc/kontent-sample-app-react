@@ -25,8 +25,7 @@ export class MapContainer extends Component {
         this.focusOnLocation = this.focusOnLocation.bind(this);
     }
 
-    //TODO: Method will be removed in React 17, will need to be rewritten if still required.
-    UNSAFE_componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps, nextState) {
         if (!nextProps.loaded) {
             return;
         }
@@ -36,8 +35,7 @@ export class MapContainer extends Component {
         }
     }
 
-    //TODO: Method will be removed in React 17, will need to be rewritten if still required.
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps){
         this.focusOnAddress(nextProps.focusOnAddress);
     }
 
@@ -140,8 +138,7 @@ export class MapContainer extends Component {
 }
 
 class MapScroller extends Component {
-    //TODO: Method will be removed in React 17, will need to be rewritten if still required.
-    UNSAFE_componentWillUpdate(nextProps) {
+    componentWillUpdate(nextProps) {
         if (nextProps.map && nextProps.scrollTo) {
             let scrollAnchor = ReactDOM.findDOMNode(this);
             Scroll.animateScroll.scrollTo(scrollAnchor.offsetTop)
@@ -150,7 +147,7 @@ class MapScroller extends Component {
         }
     }
     render() {
-        return <span style={{ width: '0px', height: '0px' }} />;
+        return <span style={{width: '0px', height: '0px'}}/>;
     }
 }
 

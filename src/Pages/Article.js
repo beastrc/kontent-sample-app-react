@@ -4,7 +4,6 @@ import dateFormat from 'dateformat';
 import { ArticleStore } from '../Stores/Article';
 import RichTextElement from '../Components/RichTextElement';
 import { dateFormats } from '../Utilities/LanguageCodes'
-import Metadata from '../Components/Metadata';
 
 let getState = (props) => {
   return {
@@ -32,8 +31,7 @@ class Article extends Component {
     ArticleStore.unsubscribe();
   }
 
-  //TODO: Method will be removed in React 17, will need to be rewritten if still required.
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.language !== nextProps.language) {
       ArticleStore.provideArticle(this.props.match.params.articleId, nextProps.language);
       dateFormat.i18n = dateFormats[nextProps.language] || dateFormats[0];
@@ -64,18 +62,6 @@ class Article extends Component {
 
     return (
       <div className="container">
-        <Metadata
-          title={article.metadataMetaTitle}
-          description={article.metadataMetaDescription}
-          ogTitle={article.metadataOgTitle}
-          ogImage={article.metadataOgImage}
-          ogDescription={article.metadataOgDescription}
-          twitterTitle={article.metadataMetaTitle}
-          twitterSite={article.metadataTwitterSite}
-          twitterCreator={article.metadataTwitterCreator}
-          twitterDescription={article.metadataTwitterDescription}
-          twitterImage={article.metadataTwitterImage}
-        />
         <article className="article-detail col-lg-9 col-md-12 article-detail-related-box">
           <h2>{title}</h2>
           <div className="article-detail-datetime">

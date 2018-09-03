@@ -2,7 +2,6 @@ import { Client } from "../Client.js";
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { initLanguageCodeObject, defaultLanguage } from '../Utilities/LanguageCodes'
-import { spinnerService } from '@chevtek/react-spinners';
 
 let unsubscribe = new Subject();
 let changeListeners = [];
@@ -139,58 +138,41 @@ class Brewer {
 
   // Actions
 
-  provideBrewer(language) {
-    if (spinnerService.isShowing('apiSpinner') === false) {
-      spinnerService.show('apiSpinner');
-    }
+  provideBrewer(brewerSlug, language) {
     fetchBrewers(language);
   }
 
   provideBrewers(language) {
-    if (spinnerService.isShowing('apiSpinner') === false) {
-      spinnerService.show('apiSpinner');
-    }
     fetchBrewers(language);
   }
 
   provideManufacturers() {
-    if (spinnerService.isShowing('apiSpinner') === false) {
-      spinnerService.show('apiSpinner');
-    }
     fetchManufacturers();
   }
 
   provideProductStatuses() {
-    if (spinnerService.isShowing('apiSpinner') === false) {
-      spinnerService.show('apiSpinner');
-    }
     fetchProductStatuses();
   }
 
   // Methods
 
   getBrewer(brewerSlug, language) {
-    spinnerService.hide('apiSpinner');
     return brewers[language || defaultLanguage].find((brewer) => brewer.urlPattern.value === brewerSlug);
   }
 
   getBrewers(language) {
-    spinnerService.hide('apiSpinner');
     return brewers[language];
   }
 
   getManufacturers() {
-    spinnerService.hide('apiSpinner');
     return manufacturers;
   }
 
   getProductStatuses() {
-    spinnerService.hide('apiSpinner');
     return productStatuses;
   }
 
   getFilter() {
-    spinnerService.hide('apiSpinner');
     return brewerFilter;
   }
 

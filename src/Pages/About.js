@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { AboutStore } from '../Stores/About';
+import { FactStore } from '../Stores/Fact';
 import RichTextElement from '../Components/RichTextElement';
-import Metadata from '../Components/Metadata';
 
 let getState = (props) => {
   return {
-    metaData: AboutStore.getMetaData(props.language),
-    facts: AboutStore.getFacts(props.language)
+    facts: FactStore.getFacts(props.language)
   };
 };
 
@@ -19,21 +17,18 @@ class About extends Component {
   }
 
   componentDidMount() {
-    AboutStore.addChangeListener(this.onChange);
-    AboutStore.provideFacts(this.props.language, this.props.match.params.urlSlug);
-    AboutStore.provideMetaData(this.props.language, this.props.match.params.urlSlug);
+    FactStore.addChangeListener(this.onChange);
+    FactStore.provideFacts(this.props.language, this.props.match.params.urlSlug);
   }
 
   componentWillUnmount() {
-    AboutStore.removeChangeListener(this.onChange);
-    AboutStore.unsubscribe();
+    FactStore.removeChangeListener(this.onChange);
+    FactStore.unsubscribe();
   }
 
-  //TODO: Method will be removed in React 17, will need to be rewritten if still required.
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.language !== nextProps.language) {
-      AboutStore.provideFacts(this.props.language, this.props.match.params.urlSlug);
-      AboutStore.provideMetaData(this.props.language, this.props.match.params.urlSlug);
+      FactStore.provideFacts(nextProps.language, nextProps.match.params.urlSlug);
     }
   }
 
@@ -74,22 +69,8 @@ class About extends Component {
       );
     });
 
-    let metaData = this.state.metaData;
-
     return (
       <div className="container">
-        <Metadata
-            title={metaData.metadataMetaTitle}
-            description={metaData.metadataMetaDescription}
-            ogTitle={metaData.metadataOgTitle}
-            ogImage={metaData.metadataOgImage}
-            ogDescription={metaData.metadataOgDescription}
-            twitterTitle={metaData.metadataMetaTitle}
-            twitterSite={metaData.metadataTwitterSite}
-            twitterCreator={metaData.metadataTwitterCreator}
-            twitterDescription={metaData.metadataTwitterDescription}
-            twitterImage={metaData.metadataTwitterImage}
-          />
         {facts}
       </div>
     );

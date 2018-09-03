@@ -29,8 +29,7 @@ class Contacts extends Component {
         CafeStore.unsubscribe();
     }
 
-    //TODO: Method will be removed in React 17, will need to be rewritten if still required.
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (this.props.language !== nextProps.language) {
             CafeStore.provideCompanyCafes(nextProps.language);
             this.selectAddress(undefined);
@@ -72,11 +71,7 @@ class Contacts extends Component {
                         <li>{model.phone}</li>
                         <li><a href={"mailto:" + model.email} target="_top">{model.email}</a></li>
                         <li>
-                            <a href="/#" onClick={(e) => {
-                                e.preventDefault();
-                                this.selectAddress(model.dataAddress)
-                            }}
-                            data-address={model.dataAddress} className="js-scroll-to-map">{model.dataAddress},<br />
+                            <a onClick={() => this.selectAddress(model.dataAddress)} data-address={model.dataAddress} className="js-scroll-to-map">{model.dataAddress},<br />
                                 {model.zipCode}, {model.countryWithState}<br />
                             </a>
                         </li>
@@ -91,7 +86,7 @@ class Contacts extends Component {
                     <div className="cafe-tile-content">
                         <h3 className="cafe-tile-name">{model.name}</h3>
                         <address className="cafe-tile-address">
-                            <a href="/#" name={model.name} className="cafe-tile-address-anchor" onClick={(e) => e.preventDefault()}>
+                            <a name={model.name} className="cafe-tile-address-anchor">
                                 {model.street}, {model.city}<br />{model.zipCode}, {model.countryWithState}
                             </a>
                         </address>
