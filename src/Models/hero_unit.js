@@ -1,12 +1,12 @@
 import { ContentItem } from 'kentico-cloud-delivery';
 import { resolveContentLink } from '../Utilities/ContentLinks';
 
-export class Office extends ContentItem {
+export class HeroUnit extends ContentItem {
   constructor() {
     super({
       propertyResolver: fieldName => {
-        if (fieldName === 'zip_code') {
-          return 'zipCode';
+        if (fieldName === 'marketing_message') {
+          return 'marketingMessage';
         }
         return fieldName;
       },

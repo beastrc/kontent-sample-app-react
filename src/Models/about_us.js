@@ -1,7 +1,7 @@
 import { ContentItem } from 'kentico-cloud-delivery';
 import { resolveContentLink } from '../Utilities/ContentLinks';
 
-export class Coffee extends ContentItem {
+export class AboutUs extends ContentItem {
   constructor() {
     super({
       propertyResolver: fieldName => {
@@ -13,9 +13,6 @@ export class Coffee extends ContentItem {
         }
         if (fieldName === 'metadata__og_title') {
           return 'metadataOgTitle';
-        }
-        if (fieldName === 'product_status') {
-          return 'productStatus';
         }
         if (fieldName === 'metadata__meta_description') {
           return 'metadataMetaDescription';
@@ -35,20 +32,11 @@ export class Coffee extends ContentItem {
         if (fieldName === 'metadata__twitter_title') {
           return 'metadataTwitterTitle';
         }
-        if (fieldName === 'short_description') {
-          return 'shortDescription';
-        }
         if (fieldName === 'metadata__twitter_description') {
           return 'metadataTwitterDescription';
         }
         if (fieldName === 'metadata__og_image') {
           return 'metadataOgImage';
-        }
-        if (fieldName === 'long_description') {
-          return 'longDescription';
-        }
-        if (fieldName === 'product_name') {
-          return 'productName';
         }
         return fieldName;
       },
