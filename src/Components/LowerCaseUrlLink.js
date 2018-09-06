@@ -1,15 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
-const LowerCaseUrlLink = props => {
-  if (/^https?:\/\//.test(props.to) || /^mailto:/.test(props.to)) {
+const LowerCaseUrlLink = (props) => {
     return (
-      <a href={props.to.toLowerCase()} {...props}>
-        {props.children}
-      </a>
+        <Link {...props} to={props.to.toLowerCase()}/>
     );
-  }
-  return <Link {...props} to={props.to.toLowerCase()} />;
-};
+}
 
 export default LowerCaseUrlLink;

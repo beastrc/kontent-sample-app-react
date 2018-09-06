@@ -1,22 +1,14 @@
 import {  ContentItem } from 'kentico-cloud-delivery';
 import {  resolveContentLink } from '../Utilities/ContentLinks';
 
-export class Home extends ContentItem {
+export class HeroUnit extends ContentItem {
     
     constructor(){
         super({
             propertyResolver: ((fieldName) => {
                 
-                if (fieldName === 'hero_unit'){
-                    return 'heroUnit';
-                }
-
-                if (fieldName === 'our_story'){
-                    return 'ourStory';
-                }
-
-                if (fieldName === 'url_pattern'){
-                    return 'urlPattern';
+                if (fieldName === 'marketing_message'){
+                    return 'marketingMessage';
                 }
 
             }),
