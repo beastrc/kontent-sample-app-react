@@ -35,14 +35,11 @@ class Home extends Component {
     HomeStore.unsubscribe();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.language !== nextProps.language) {
-      HomeStore.provideMetaData(nextProps.language);
-      return {
-        language: nextProps.language
-      };
+  //TODO: Method will be removed in React 17, will need to be rewritten if still required.
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.language !== nextProps.language) {
+      HomeStore.provideMetaData(this.props.language);
     }
-    return null;
   }
 
   onChange() {

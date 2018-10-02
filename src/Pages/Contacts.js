@@ -28,15 +28,12 @@ class Contacts extends Component {
     CafeStore.unsubscribe();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.language !== nextProps.language) {
+  //TODO: Method will be removed in React 17, will need to be rewritten if still required.
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.language !== nextProps.language) {
       CafeStore.provideCompanyCafes(nextProps.language);
-      return {
-        language: nextProps.language,
-        selectedAddress: undefined
-      };
+      this.selectAddress(undefined);
     }
-    return null;
   }
 
   onChange(language) {

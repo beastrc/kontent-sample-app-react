@@ -5,11 +5,7 @@ import Metadata from '../Components/Metadata';
 
 let getState = props => {
   return {
-    brewer: BrewerStore.getBrewer(
-      props.match.params.brewerSlug,
-      props.language
-    ),
-    match: { params: { brewerSlug: props.match.params.brewerSlug } }
+    brewer: BrewerStore.getBrewer(props.match.params.brewerSlug, props.language)
   };
 };
 
@@ -31,17 +27,14 @@ class Brewer extends Component {
     BrewerStore.unsubscribe();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  //TODO: Method will be removed in React 17, will need to be rewritten if still required.
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
-      prevState.language !== nextProps.language ||
-      prevState.match.params.brewerSlug !== nextProps.match.params.brewerSlug
+      this.props.language !== nextProps.language ||
+      this.props.match.params.brewerSlug !== nextProps.match.params.brewerSlug
     ) {
-      BrewerStore.provideBrewers(nextProps.language);
-      return {
-        language: nextProps.language
-      };
+      BrewerStore.provideBrewer(nextProps.language);
     }
-    return null;
   }
 
   onChange() {

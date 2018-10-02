@@ -35,21 +35,18 @@ class About extends Component {
     AboutStore.unsubscribe();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.language !== nextProps.language) {
+  //TODO: Method will be removed in React 17, will need to be rewritten if still required.
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.language !== nextProps.language) {
       AboutStore.provideFacts(
-        nextProps.language,
-        nextProps.match.params.urlSlug
+        this.props.language,
+        this.props.match.params.urlSlug
       );
       AboutStore.provideMetaData(
-        nextProps.language,
-        nextProps.match.params.urlSlug
+        this.props.language,
+        this.props.match.params.urlSlug
       );
-      return {
-        language: nextProps.language
-      };
     }
-    return null;
   }
 
   onChange() {
