@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { BrewerStore } from "../Stores/Brewer";
+import { BrewerStore } from '../Stores/Brewer';
 import RichTextElement from '../Components/RichTextElement';
+import Metadata from '../Components/Metadata';
 
-let getState = (props) => {
+let getState = props => {
   return {
-    brewer: BrewerStore.getBrewer(props.match.params.brewerSlug, props.language)
+    brewer: BrewerStore.getBrewer(
+      props.match.params.brewerSlug,
+      props.language
+    ),
+    match: { params: { brewerSlug: props.match.params.brewerSlug } }
   };
 };
 
 class Brewer extends Component {
-
   constructor(props) {
     super(props);
 
@@ -19,7 +23,7 @@ class Brewer extends Component {
 
   componentDidMount() {
     BrewerStore.addChangeListener(this.onChange);
-    BrewerStore.provideBrewer(this.props.match.params.brewerSlug, this.props.language);
+    BrewerStore.provideBrewer(this.props.language);
   }
 
   componentWillUnmount() {
@@ -27,10 +31,17 @@ class Brewer extends Component {
     BrewerStore.unsubscribe();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.language !== nextProps.language || this.props.match.params.brewerSlug !== nextProps.match.params.brewerSlug) {
-      BrewerStore.provideBrewer(this.props.match.params.brewerSlug, nextProps.language);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      prevState.language !== nextProps.language ||
+      prevState.match.params.brewerSlug !== nextProps.match.params.brewerSlug
+    ) {
+      BrewerStore.provideBrewers(nextProps.language);
+      return {
+        language: nextProps.language
+      };
     }
+    return null;
   }
 
   onChange() {
@@ -39,9 +50,7 @@ class Brewer extends Component {
 
   render() {
     if (!this.state.brewer) {
-      return (
-        <div className="container"></div>
-      );
+      return <div className="container" />;
     }
 
     let brewer = this.state.brewer;
@@ -51,6 +60,18 @@ class Brewer extends Component {
 
     return (
       <div className="container">
+        <Metadata
+          title={brewer.metadataMetaTitle}
+          description={brewer.metadataMetaDescription}
+          ogTitle={brewer.metadataOgTitle}
+          ogImage={brewer.metadataOgImage}
+          ogDescription={brewer.metadataOgDescription}
+          twitterTitle={brewer.metadataMetaTitle}
+          twitterSite={brewer.metadataTwitterSite}
+          twitterCreator={brewer.metadataTwitterCreator}
+          twitterDescription={brewer.metadataTwitterDescription}
+          twitterImage={brewer.metadataTwitterImage}
+        />
         <article className="product-detail">
           <div className="row">
             <div className="col-md-12">
