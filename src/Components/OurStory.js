@@ -1,24 +1,18 @@
 import React from 'react';
 import { translate } from 'react-translate';
 
-const OurStory = props => {
-  const fact = props.fact;
-  const images = fact.image && fact.image.value;
-  const imageUrl = images && images.length && images[0].url;
+import StoryImage from '../Images/our-story.jpg';
 
+const OurStory = props => {
   return (
     <div className="row">
-      <h1 className="title-tab">{fact.title && fact.title.value}</h1>
+      <h1 className="title-tab">{props.t('title')}</h1>
       <div className="col-sm-12">
         <div
           className="ourstory-section center-text"
-          style={
-            imageUrl ? { backgroundImage: 'url(' + imageUrl + ')' } : undefined
-          }
+          style={{ backgroundImage: 'url(' + StoryImage + ')' }}
         >
-          {fact.description && (
-            <div dangerouslySetInnerHTML={{ __html: fact.description.value }} />
-          )}
+          {props.t('text')}
         </div>
       </div>
     </div>
