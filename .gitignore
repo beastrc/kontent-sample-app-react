@@ -13,6 +13,3 @@ npm-debug.log
 # IDE
 .vs
 .vscode
-
-# dotenv environment variables file
-.env
