@@ -9,7 +9,7 @@ import SpinnerBox from '../../Components/SpinnerBox';
 import {
   defaultProjectId,
   selectedProjectCookieName,
-  SAMPLE_PROJECT_ITEM_COUNT
+  getSampleProjectItemsCount
 } from '../../Utilities/SelectedProject';
 import { resetStores } from '../../Utilities/StoreManager';
 
@@ -106,17 +106,24 @@ class Configuration extends Component {
       Client.items()
         .elementsParameter(['id'])
         .depthParameter(0)
-        .toObservable()
+        .getObservable()
         .pipe(takeUntil(this.state.unsubscribe))
-        .subscribe(response => {
-          if (response.items.length === SAMPLE_PROJECT_ITEM_COUNT) {
-            this.setState({
-              preparingProject: false
-            });
-            this.redirectToHome(newProjectId);
-          } else {
-            this.waitUntilProjectAccessible(newProjectId);
-          }
+        .subscribe(response => {          
+          const sampleProjectClient = getSampleProjectItemsCount()
+            .subscribe(
+            (res)=> {              
+              if ( response.items.length >= res.items.length) {                            
+                this.setState({
+                  preparingProject: false
+                });              
+                this.redirectToHome(newProjectId);                        
+              } else {
+                this.waitUntilProjectAccessible(newProjectId);
+              }
+
+              sampleProjectClient.unsubscribe();
+            }           
+          )                            
         });
     }, 2000);
   }

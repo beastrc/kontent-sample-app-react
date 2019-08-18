@@ -36,7 +36,7 @@ let fetchBrewers = language => {
   }
 
   query
-    .toObservable()
+    .getObservable()
     .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       if (language) {
@@ -54,7 +54,7 @@ let fetchManufacturers = () => {
   }
 
   Client.taxonomy('manufacturer')
-    .toObservable()
+    .getObservable()
     .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       manufacturers = response.taxonomy.terms;
@@ -69,7 +69,7 @@ let fetchProductStatuses = () => {
   }
 
   Client.taxonomy('product_status')
-    .toObservable()
+    .getObservable()
     .pipe(takeUntil(unsubscribe))
     .subscribe(response => {
       productStatuses = response.taxonomy.terms;
