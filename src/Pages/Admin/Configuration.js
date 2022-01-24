@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
 import { isUUID } from 'validator';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 import { resetClient, Client } from '../../Client';
 import SpinnerBox from '../../Components/SpinnerBox';
@@ -45,14 +43,12 @@ class Configuration extends Component {
         selectedProjectCookieName
       ),
       preparingProject: false,
-      unsubscribe: new Subject()
     };
 
     this.handleProjectInputChange = this.handleProjectInputChange.bind(this);
     this.handleSetProjectSubmit = this.handleSetProjectSubmit.bind(this);
     this.setNewProjectId = this.setNewProjectId.bind(this);
     this.receiveMessage = this.receiveMessage.bind(this);
-    this.unsubscribe = this.unsubscribe.bind(this);
     this.waitUntilProjectAccessible = this.waitUntilProjectAccessible.bind(
       this
     );
@@ -64,7 +60,6 @@ class Configuration extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.receiveMessage);
-    this.unsubscribe();
   }
 
   handleProjectInputChange(event) {
@@ -108,21 +103,18 @@ class Configuration extends Component {
       Client.items()
         .elementsParameter(['id'])
         .depthParameter(0)
-        .toObservable()
-        .pipe(takeUntil(this.state.unsubscribe))
-        .subscribe(response => {
-          const sampleProjectListingResponse = getSampleProjectItems().subscribe(
+        .toPromise()
+        .then(response => {
+          getSampleProjectItems().then(
             sampleProjectClientResult => {
               if (
-                response.items.length >= sampleProjectClientResult.items.length
+                response.data.items.length >= sampleProjectClientResult.data.items.length
               ) {
                 this.setState({
                   preparingProject: false
                 });
-                sampleProjectListingResponse.unsubscribe();
                 this.redirectToHome(newProjectId);
               } else {
-                sampleProjectListingResponse.unsubscribe();
                 this.waitUntilProjectAccessible(newProjectId);
               }
             }
@@ -131,18 +123,10 @@ class Configuration extends Component {
     }, 2000);
   }
 
-  unsubscribe() {
-    this.state.unsubscribe.next();
-    this.state.unsubscribe.complete();
-    this.setState({
-      unsubscribe: new Subject()
-    });
-  }
-
   redirectToHome(newProjectId) {
     const infoMessage =
       newProjectId === defaultProjectId
-        ? `You've configured your app to with a project ID of a shared Kontent project.`
+        ? `You've configured your app to with a project ID of a shared Kentico Kontent project.`
         : `You've configured your app with a project ID "${newProjectId}". You can edit its contents at https://kontent.ai/.`;
     this.props.history.push(`/?infoMessage=${infoMessage}`);
   }
@@ -186,7 +170,7 @@ class Configuration extends Component {
               <a href="/" className="logotype-link">
                 <img
                   src={KontentLogo}
-                  alt="Kontent logo"
+                  alt="Kentico Kontent logo"
                   id="KenticoKontent"
                   width="100%"
                   height="100%"
@@ -199,10 +183,10 @@ class Configuration extends Component {
           <div className="content">
             <h1>Sample Site—Configuration</h1>
             <p>
-              For your sample app to work, you should have a Kontent
+              For your sample app to work, you should have a Kentico Kontent
               project containing content. Your app should be then configured
               with its project ID. You can either get it by signing in using
-              your Kontent credentials or by signing up for a trial.
+              your Kentico Kontent credentials or by signing up for a trial.
               Later, it will be converted to a free plan.
             </p>
             {message}
@@ -218,7 +202,7 @@ class Configuration extends Component {
             <input
               type="submit"
               className="button-secondary"
-              value="Get Project ID from Kontent"
+              value="Get Project ID from Kentico Kontent"
             />
           </form>
         </section>
