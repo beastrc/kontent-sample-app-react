@@ -4,8 +4,9 @@ import {
   defaultProjectId
 } from './Utilities/SelectedProject';
 
-// kentico kontent
+
 import { camelCasePropertyNameResolver, DeliveryClient } from '@kentico/kontent-delivery';
+
 
 // environment variables
 const projectId = process.env.REACT_APP_PROJECT_ID || '';
@@ -37,6 +38,7 @@ const resetClient = newProjectId => {
     defaultQueryConfig: {
       usePreviewMode: isPreview(),
     },
+    propertyNameResolver: camelCasePropertyNameResolver
   });
   const cookies = new Cookies(document.cookies);
   cookies.set(selectedProjectCookieName, newProjectId, { path: '/' });
