@@ -28,6 +28,7 @@ class Coffee extends Component {
 
   componentWillUnmount() {
     CoffeeStore.removeChangeListener(this.onChange);
+    CoffeeStore.unsubscribe();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -55,13 +56,13 @@ class Coffee extends Component {
     let coffee = this.state.coffee;
 
     let name =
-      coffee.elements.productName.value.trim().length > 0
-        ? coffee.elements.productName.value
+      coffee.productName.value.trim().length > 0
+        ? coffee.productName.value
         : this.props.t('noNameValue');
 
     let imageLink =
-      coffee.elements.image.value[0] !== undefined ? (
-        <img alt={name} src={coffee.elements.image.value[0].url} title={name} />
+      coffee.image.value[0] !== undefined ? (
+        <img alt={name} src={coffee.image.value[0].url} title={name} />
       ) : (
         <div className="placeholder-tile-image">
           {this.props.t('noTeaserValue')}
@@ -69,40 +70,40 @@ class Coffee extends Component {
       );
 
     let descriptionElement =
-      coffee.elements.longDescription.value !== '<p><br></p>' ? (
-        <RichTextElement element={coffee.elements.longDescription} />
+      coffee.longDescription.value !== '<p><br></p>' ? (
+        <RichTextElement element={coffee.longDescription} />
       ) : (
         <p>{this.props.t('noDescriptionValue')}</p>
       );
 
     let farm =
-      coffee.elements.farm.value.trim().length > 0 ? coffee.elements.farm.value : '\u00A0';
+      coffee.farm.value.trim().length > 0 ? coffee.farm.value : '\u00A0';
 
     let variety =
-      coffee.elements.variety.value.trim().length > 0 ? coffee.elements.variety.value : '\u00A0';
+      coffee.variety.value.trim().length > 0 ? coffee.variety.value : '\u00A0';
 
     let processing =
-      coffee.elements.processing.value.length > 0
-        ? coffee.elements.processing.value[0].name
+      coffee.processing.value.length > 0
+        ? coffee.processing.value[0].name
         : '\u00A0';
     let altitude =
-      coffee.elements.altitude.value.trim().length > 0
-        ? coffee.elements.altitude.value + ' feet'
+      coffee.altitude.value.trim().length > 0
+        ? coffee.altitude.value + ' feet'
         : '\u00A0';
 
     return (
       <div className="container">
         <Metadata
-          title={coffee.elements.metadataMetaTitle}
-          description={coffee.elements.metadataMetaDescription}
-          ogTitle={coffee.elements.metadataOgTitle}
-          ogImage={coffee.elements.metadataOgImage}
-          ogDescription={coffee.elements.metadataOgDescription}
-          twitterTitle={coffee.elements.metadataMetaTitle}
-          twitterSite={coffee.elements.metadataTwitterSite}
-          twitterCreator={coffee.elements.metadataTwitterCreator}
-          twitterDescription={coffee.elements.metadataTwitterDescription}
-          twitterImage={coffee.elements.metadataTwitterImage}
+          title={coffee.metadataMetaTitle}
+          description={coffee.metadataMetaDescription}
+          ogTitle={coffee.metadataOgTitle}
+          ogImage={coffee.metadataOgImage}
+          ogDescription={coffee.metadataOgDescription}
+          twitterTitle={coffee.metadataMetaTitle}
+          twitterSite={coffee.metadataTwitterSite}
+          twitterCreator={coffee.metadataTwitterCreator}
+          twitterDescription={coffee.metadataTwitterDescription}
+          twitterImage={coffee.metadataTwitterImage}
         />
         <article className="product-detail">
           <div className="row">

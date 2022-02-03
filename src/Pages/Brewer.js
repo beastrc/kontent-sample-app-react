@@ -29,6 +29,7 @@ class Brewer extends Component {
 
   componentWillUnmount() {
     BrewerStore.removeChangeListener(this.onChange);
+    BrewerStore.unsubscribe();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -55,13 +56,13 @@ class Brewer extends Component {
 
     let brewer = this.state.brewer;
     let name =
-      brewer.elements.productName.value.trim().length > 0
-        ? brewer.elements.productName.value
+      brewer.productName.value.trim().length > 0
+        ? brewer.productName.value
         : this.props.t('noNameValue');
 
     let imageLink =
-      brewer.elements.image.value[0] !== undefined ? (
-        <img alt={name} src={brewer.elements.image.value[0].url} title={name} />
+      brewer.image.value[0] !== undefined ? (
+        <img alt={name} src={brewer.image.value[0].url} title={name} />
       ) : (
         <div className="placeholder-tile-image">
           {this.props.t('noTeaserValue')}
@@ -69,8 +70,8 @@ class Brewer extends Component {
       );
 
     let descriptionElement =
-      brewer.elements.longDescription.value !== '<p><br></p>' ? (
-        <RichTextElement element={brewer.elements.longDescription} />
+      brewer.longDescription.value !== '<p><br></p>' ? (
+        <RichTextElement element={brewer.longDescription} />
       ) : (
         <p>{this.props.t('noDescriptionValue')}</p>
       );
@@ -78,16 +79,16 @@ class Brewer extends Component {
     return (
       <div className="container">
         <Metadata
-          title={brewer.elements.metadataMetaTitle}
-          description={brewer.elements.metadataMetaDescription}
-          ogTitle={brewer.elements.metadataOgTitle}
-          ogImage={brewer.elements.metadataOgImage}
-          ogDescription={brewer.elements.metadataOgDescription}
-          twitterTitle={brewer.elements.metadataMetaTitle}
-          twitterSite={brewer.elements.metadataTwitterSite}
-          twitterCreator={brewer.elements.metadataTwitterCreator}
-          twitterDescription={brewer.elements.metadataTwitterDescription}
-          twitterImage={brewer.elements.metadataTwitterImage}
+          title={brewer.metadataMetaTitle}
+          description={brewer.metadataMetaDescription}
+          ogTitle={brewer.metadataOgTitle}
+          ogImage={brewer.metadataOgImage}
+          ogDescription={brewer.metadataOgDescription}
+          twitterTitle={brewer.metadataMetaTitle}
+          twitterSite={brewer.metadataTwitterSite}
+          twitterCreator={brewer.metadataTwitterCreator}
+          twitterDescription={brewer.metadataTwitterDescription}
+          twitterImage={brewer.metadataTwitterImage}
         />
         <article className="product-detail">
           <div className="row">

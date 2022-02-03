@@ -21,11 +21,12 @@ class Coffees extends Component {
 
   componentDidMount() {
     CoffeeStore.addChangeListener(this.onChange);
-        CoffeeStore.provideCoffees(this.props.language);
+    CoffeeStore.provideCoffees(this.props.language);
   }
 
   componentWillUnmount() {
     CoffeeStore.removeChangeListener(this.onChange);
+    CoffeeStore.unsubscribe();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -39,7 +40,7 @@ class Coffees extends Component {
   }
 
   onChange() {
-        this.setState(getState(this.props));
+    this.setState(getState(this.props));
   }
 
   render() {
@@ -66,21 +67,21 @@ class Coffees extends Component {
 
     let coffees = this.state.coffees.filter(filter).map((coffee, index) => {
       let price =
-        coffee.elements.price.value !== null
-          ? formatPrice(coffee.elements.price.value, this.props.language)
+        coffee.price.value !== null
+          ? formatPrice(coffee.price.value, this.props.language)
           : this.props.t('noPriceValue');
 
       let name =
-        coffee.elements.productName.value.trim().length > 0
-          ? coffee.elements.productName.value
+        coffee.productName.value.trim().length > 0
+          ? coffee.productName.value
           : this.props.t('noNameValue');
 
       let imageLink =
-        coffee.elements.image.value[0] !== undefined ? (
+        coffee.image.value[0] !== undefined ? (
           <img
             alt={name}
             className=""
-            src={coffee.elements.image.value[0].url}
+            src={coffee.image.value[0].url}
             title={name}
           />
         ) : (
@@ -92,9 +93,9 @@ class Coffees extends Component {
           </div>
         );
 
-      let status = renderProductStatus(coffee.elements.productStatus);
+      let status = renderProductStatus(coffee.productStatus);
       let link = resolveContentLink(
-        { type: 'coffee', urlSlug: coffee.elements.urlPattern.value },
+        { type: 'coffee', urlSlug: coffee.urlPattern.value },
         this.props.language
       );
 

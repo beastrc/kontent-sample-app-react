@@ -1,10 +1,13 @@
 import { Client } from '../Client.js';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import {
   initLanguageCodeObject,
   defaultLanguage
 } from '../Utilities/LanguageCodes';
 import { spinnerService } from '@simply007org/react-spinners';
 
+let unsubscribe = new Subject();
 let changeListeners = [];
 const resetStore = () => ({
   home: initLanguageCodeObject()
@@ -25,12 +28,13 @@ let fetchHome = language => {
   }
 
   query
-    .toPromise()
-    .then(response => {
+    .toObservable()
+    .pipe(takeUntil(unsubscribe))
+    .subscribe(response => {
       if (language) {
-                home[language] = response.data.items[0];
+        home[language] = response.items[0];
       } else {
-        home[defaultLanguage] = response.data.items[0];
+        home[defaultLanguage] = response.items[0];
       }
       notifyChange();
     });
@@ -49,7 +53,7 @@ class Home {
   // Methods
 
   getHome(language) {
-        spinnerService.hide('apiSpinner');
+    spinnerService.hide('apiSpinner');
     return home[language];
   }
 
@@ -63,6 +67,12 @@ class Home {
     changeListeners = changeListeners.filter(element => {
       return element !== listener;
     });
+  }
+
+  unsubscribe() {
+    unsubscribe.next();
+    unsubscribe.complete();
+    unsubscribe = new Subject();
   }
 }
 

@@ -13,18 +13,18 @@ const LatestArticles = props => {
     return dateFormat(value, 'mmmm d');
   };
 
-    var otherArticles = props.articles.slice(1).map(({ system, elements: articleElements }, index) => {
+  var otherArticles = props.articles.slice(1).map((article, index) => {
     let title =
-      articleElements.title.value.trim().length > 0
-        ? articleElements.title.value
+      article.title.value.trim().length > 0
+        ? article.title.value
         : props.t('noTitleValue');
 
     let imageLink =
-      articleElements.teaserImage.value[0] !== undefined ? (
+      article.teaserImage.value[0] !== undefined ? (
         <img
           alt={'Article ' + title}
           className="article-tile-image"
-          src={articleElements.teaserImage.value[0].url}
+          src={article.teaserImage.value[0].url}
           title={'Article ' + title}
         />
       ) : (
@@ -33,14 +33,14 @@ const LatestArticles = props => {
         </div>
       );
 
-    let postDate = formatDate(articleElements.postDate.value);
+    let postDate = formatDate(article.postDate.value);
 
     let summary =
-      articleElements.summary.value.trim().length > 0
-        ? articleElements.summary.value
+      article.summary.value.trim().length > 0
+        ? article.summary.value
         : props.t('noSummaryValue');
 
-    let link = `/${props.language.toLowerCase()}/articles/${system.id}`;
+    let link = `/${props.language.toLowerCase()}/articles/${article.system.id}`;
 
     return (
       <div className="col-md-3" key={index}>
@@ -58,19 +58,19 @@ const LatestArticles = props => {
     );
   });
 
-  let { system, elements: articleElements } = props.articles[0];
+  let article = props.articles[0];
 
   let title =
-    articleElements.title.value.trim().length > 0
-      ? articleElements.title.value
+    article.title.value.trim().length > 0
+      ? article.title.value
       : props.t('noTitleValue');
 
   let imageLink =
-    articleElements.teaserImage.value[0] !== undefined ? (
+    article.teaserImage.value[0] !== undefined ? (
       <img
         alt={'Article ' + title}
         className="article-tile-image"
-        src={articleElements.teaserImage.value[0].url}
+        src={article.teaserImage.value[0].url}
         title={'Article ' + title}
       />
     ) : (
@@ -79,14 +79,14 @@ const LatestArticles = props => {
       </div>
     );
 
-  let postDate = formatDate(articleElements.postDate.value);
+  let postDate = formatDate(article.postDate.value);
 
   let summary =
-    articleElements.summary.value.trim().length > 0
-      ? articleElements.summary.value
+    article.summary.value.trim().length > 0
+      ? article.summary.value
       : props.t('noSummaryValue');
 
-  let link = `/${props.language.toLowerCase()}/articles/${system.id}`;
+  let link = `/${props.language.toLowerCase()}/articles/${article.system.id}`;
   let tabTitle = props.t('title');
 
   return (
