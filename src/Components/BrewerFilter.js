@@ -27,12 +27,14 @@ class BrewerFilter extends Component {
 
   componentDidMount() {
     BrewerStore.addChangeListener(this.onChange);
+    BrewerStore.provideBrewers();
     BrewerStore.provideManufacturers();
     BrewerStore.provideProductStatuses();
   }
 
   componentWillUnmount() {
     BrewerStore.removeChangeListener(this.onChange);
+    BrewerStore.unsubscribe();
   }
 
   onChange() {

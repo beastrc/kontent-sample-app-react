@@ -1,10 +1,13 @@
 import { Client } from '../Client.js';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import {
   initLanguageCodeObject,
   defaultLanguage
 } from '../Utilities/LanguageCodes';
 import { spinnerService } from '@simply007org/react-spinners';
 
+let unsubscribe = new Subject();
 let changeListeners = [];
 const resetStore = () => ({
   facts: initLanguageCodeObject(),
@@ -38,12 +41,13 @@ let fetchFacts = (language, urlSlug) => {
   }
 
   query
-    .toPromise()
-    .then(response => {
+    .toObservable()
+    .pipe(takeUntil(unsubscribe))
+    .subscribe(response => {
       if (language) {
-        facts[language] = response.data.items[0].elements.facts;
+        facts[language] = response.items[0].facts;
       } else {
-        facts[defaultLanguage] = response.data.items[0].elements.facts;
+        facts[defaultLanguage] = response.items[0].facts;
       }
       notifyChange();
     });
@@ -74,12 +78,13 @@ let fetchMetaData = (language, urlSlug) => {
   }
 
   query
-    .toPromise()
-    .then(response => {
+    .toObservable()
+    .pipe(takeUntil(unsubscribe))
+    .subscribe(response => {
       if (language) {
-        metaData[language] = response.data.items[0];
+        metaData[language] = response.items[0];
       } else {
-        metaData[defaultLanguage] = response.data.items[0];
+        metaData[defaultLanguage] = response.items[0];
       }
       notifyChange();
     });
@@ -124,6 +129,12 @@ class About {
     changeListeners = changeListeners.filter(element => {
       return element !== listener;
     });
+  }
+
+  unsubscribe() {
+    unsubscribe.next();
+    unsubscribe.complete();
+    unsubscribe = new Subject();
   }
 }
 

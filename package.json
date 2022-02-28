@@ -12,7 +12,7 @@
     "react-scripts": "^3.4.1"
   },
   "dependencies": {
-    "@kentico/kontent-delivery": "^11.3.0",
+    "@kentico/kontent-delivery": "^10.4.1",
     "@simply007org/react-spinners": "0.0.3",
     "google-maps-react": "^2.0.6",
     "immutable": "^4.0.0-rc.12",
@@ -25,6 +25,8 @@
     "react-router-dom": "^5.2.0",
     "react-scroll": "^1.7.16",
     "react-translate": "^7.0.1",
+    "rxjs": "^7.1.0",
+    "twitter-widgets": "^2.0.0",
     "universal-cookie": "^4.0.3",
     "validator": "^13.1.1"
   },
@@ -36,10 +38,10 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "start": "react-scripts start",
-    "build": "cross-env CI=true react-scripts build && cpy build/index.html build --rename=200.html",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "cross-env CI=true react-scripts --openssl-legacy-provider build && cpy build/index.html build --rename=200.html",
+    "test-watch": "react-scripts test --env=jsdom",
+    "test": "cross-env CI=true react-scripts --openssl-legacy-provider test --env=jsdom --passWithNoTests"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,5 +51,9 @@
     "not ie 11",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "engines": {
+    "npm": "7 || 8",
+    "node": "16 || 17"
+  }
 }

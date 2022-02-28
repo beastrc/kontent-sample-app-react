@@ -1,10 +1,13 @@
 import { Client } from '../Client.js';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import {
   initLanguageCodeObject,
   defaultLanguage
 } from '../Utilities/LanguageCodes';
 import { spinnerService } from '@simply007org/react-spinners';
 
+let unsubscribe = new Subject();
 let changeListeners = [];
 const resetStore = () => ({
   coffees: initLanguageCodeObject(),
@@ -20,21 +23,22 @@ let notifyChange = () => {
 };
 
 let fetchCoffees = language => {
-    var query = Client.items()
+  var query = Client.items()
     .type('coffee')
-    .orderByAscending('elements.product_name');
+    .orderParameter('elements.product_name');
 
   if (language) {
     query.languageParameter(language);
   }
 
   query
-    .toPromise()
-    .then(response => {
-            if (language) {
-        coffees[language] = response.data.items;
+    .toObservable()
+    .pipe(takeUntil(unsubscribe))
+    .subscribe(response => {
+      if (language) {
+        coffees[language] = response.items;
       } else {
-        coffees[defaultLanguage] = response.data.items;
+        coffees[defaultLanguage] = response.items;
       }
       notifyChange();
     });
@@ -42,18 +46,20 @@ let fetchCoffees = language => {
 
 let fetchProcessings = () => {
   Client.taxonomy('processing')
-    .toPromise()
-    .then(response => {
-      processings = response.data.taxonomy.terms;
+    .toObservable()
+    .pipe(takeUntil(unsubscribe))
+    .subscribe(response => {
+      processings = response.taxonomy.terms;
       notifyChange();
     });
 };
 
 let fetchProductStatuses = () => {
   Client.taxonomy('product_status')
-    .toPromise()
-    .then(response => {
-      productStatuses = response.data.taxonomy.terms;
+    .toObservable()
+    .pipe(takeUntil(unsubscribe))
+    .subscribe(response => {
+      productStatuses = response.taxonomy.terms;
       notifyChange();
     });
 };
@@ -75,7 +81,7 @@ export class Filter {
       return true;
     }
 
-    let processings = coffee.elements.processing.value.map(x => x.codename);
+    let processings = coffee.processing.value.map(x => x.codename);
 
     return this.processings.some(x => processings.includes(x));
   }
@@ -85,7 +91,7 @@ export class Filter {
       return true;
     }
 
-    let statuses = coffee.elements.productStatus.value.map(x => x.codename);
+    let statuses = coffee.productStatus.value.map(x => x.codename);
 
     return this.productStatuses.some(x => statuses.includes(x));
   }
@@ -143,12 +149,12 @@ class Coffee {
   getCoffee(coffeeSlug, language) {
     spinnerService.hide('apiSpinner');
     return coffees[language || defaultLanguage].find(
-      coffee => coffee.elements.urlPattern.value === coffeeSlug
+      coffee => coffee.urlPattern.value === coffeeSlug
     );
   }
 
   getCoffees(language) {
-        spinnerService.hide('apiSpinner');
+    spinnerService.hide('apiSpinner');
     return coffees[language];
   }
 
@@ -181,6 +187,12 @@ class Coffee {
     changeListeners = changeListeners.filter(element => {
       return element !== listener;
     });
+  }
+
+  unsubscribe() {
+    unsubscribe.next();
+    unsubscribe.complete();
+    unsubscribe = new Subject();
   }
 }
 

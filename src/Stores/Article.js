@@ -1,18 +1,19 @@
 import { Client } from '../Client.js';
+import { SortOrder } from '@kentico/kontent-delivery';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import {
   initLanguageCodeObject,
   defaultLanguage
 } from '../Utilities/LanguageCodes';
 import { spinnerService } from '@simply007org/react-spinners';
-import _ from 'lodash';
-import { linkedItemsHelper } from '@kentico/kontent-delivery';
 
+let unsubscribe = new Subject();
 const resetStore = () => ({
   articleList: initLanguageCodeObject(),
-  articleDetails: initLanguageCodeObject(),
-  articleDetailsLinkedItems: initLanguageCodeObject()
+  articleDetails: initLanguageCodeObject()
 });
-let { articleList, articleDetails, articleDetailsLinkedItems } = resetStore();
+let { articleList, articleDetails } = resetStore();
 
 let changeListeners = [];
 
@@ -60,15 +61,14 @@ class Article {
     }
 
     query
-      .toPromise()
-      .then(response => {
+      .toObservable()
+      .pipe(takeUntil(unsubscribe))
+      .subscribe(response => {
         if (!response.isEmpty) {
           if (language) {
-            articleDetails[language][articleId] = response.data.items[0];
-            articleDetailsLinkedItems[language] = _.unionBy(articleDetailsLinkedItems[language], linkedItemsHelper.convertLinkedItemsToArray(response.data.linkedItems), 'system.id');
+            articleDetails[language][articleId] = response.items[0];
           } else {
-            articleDetails[defaultLanguage][articleId] = response.data.items[0];
-            articleDetailsLinkedItems[defaultLanguage] = _.unionBy(articleDetailsLinkedItems[defaultLanguage], linkedItemsHelper.convertLinkedItemsToArray(response.data.linkedItems), 'system.id');
+            articleDetails[defaultLanguage][articleId] = response.items[0];
           }
           notifyChange();
         }
@@ -78,7 +78,7 @@ class Article {
   provideArticles(language) {
     let query = Client.items()
       .type('article')
-      .orderByDescending('elements.post_date');
+      .orderParameter('elements.post_date', SortOrder.desc);
 
     if (language) {
       query.languageParameter(language);
@@ -89,12 +89,13 @@ class Article {
     }
 
     query
-      .toPromise()
-      .then(response => {
+      .toObservable()
+      .pipe(takeUntil(unsubscribe))
+      .subscribe(response => {
         if (language) {
-          articleList[language] = response.data.items;
+          articleList[language] = response.items;
         } else {
-          articleList[defaultLanguage] = response.data.items;
+          articleList[defaultLanguage] = response.items;
         }
         notifyChange();
       });
@@ -107,15 +108,6 @@ class Article {
       return articleDetails[language][articleId];
     } else {
       return articleDetails[defaultLanguage][articleId];
-    }
-  }
-
-  getArticleLinkedItems(language) {
-    spinnerService.hide('apiSpinner');
-    if (language) {
-      return articleDetailsLinkedItems[language];
-    } else {
-      return articleDetailsLinkedItems[defaultLanguage];
     }
   }
 
@@ -137,6 +129,12 @@ class Article {
     changeListeners = changeListeners.filter(element => {
       return element !== listener;
     });
+  }
+
+  unsubscribe() {
+    unsubscribe.next();
+    unsubscribe.complete();
+    unsubscribe = new Subject();
   }
 }
 
