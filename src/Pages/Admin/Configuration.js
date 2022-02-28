@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
 import { isUUID } from 'validator';
-import { Subject } from 'rxjs';
 
 import { resetClient, Client } from '../../Client';
 import SpinnerBox from '../../Components/SpinnerBox';
@@ -14,7 +13,7 @@ import { resetStores } from '../../Utilities/StoreManager';
 
 import KontentLogo from '../../Images/Admin/kk-logo.svg';
 
-import './Configuration.css';
+import './Admin.css';
 
 const getWindowCenterPosition = (windowWidth, windowHeight) => {
   const dualScreenLeft =
@@ -44,14 +43,12 @@ class Configuration extends Component {
         selectedProjectCookieName
       ),
       preparingProject: false,
-      unsubscribe: new Subject()
     };
 
     this.handleProjectInputChange = this.handleProjectInputChange.bind(this);
     this.handleSetProjectSubmit = this.handleSetProjectSubmit.bind(this);
     this.setNewProjectId = this.setNewProjectId.bind(this);
     this.receiveMessage = this.receiveMessage.bind(this);
-    this.unsubscribe = this.unsubscribe.bind(this);
     this.waitUntilProjectAccessible = this.waitUntilProjectAccessible.bind(
       this
     );
@@ -63,7 +60,6 @@ class Configuration extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.receiveMessage);
-    this.unsubscribe();
   }
 
   handleProjectInputChange(event) {
@@ -104,37 +100,29 @@ class Configuration extends Component {
 
   waitUntilProjectAccessible(newProjectId) {
     setTimeout(() => {
+      resetClient(newProjectId);
       Client.items()
         .elementsParameter(['id'])
         .depthParameter(0)
         .toPromise()
         .then(response => {
-          const sampleProjectListingResponse = getSampleProjectItems().subscribe(
+          getSampleProjectItems().then(
             sampleProjectClientResult => {
+              resetClient(newProjectId);
               if (
-                response.items.length >= sampleProjectClientResult.items.length
+                response.data.items.length >= sampleProjectClientResult.data.items.length
               ) {
                 this.setState({
                   preparingProject: false
                 });
-                sampleProjectListingResponse.unsubscribe();
                 this.redirectToHome(newProjectId);
               } else {
-                sampleProjectListingResponse.unsubscribe();
                 this.waitUntilProjectAccessible(newProjectId);
               }
             }
           );
         });
     }, 2000);
-  }
-
-  unsubscribe() {
-    this.state.unsubscribe.next();
-    this.state.unsubscribe.complete();
-    this.setState({
-      unsubscribe: new Subject()
-    });
   }
 
   redirectToHome(newProjectId) {
@@ -177,90 +165,102 @@ class Configuration extends Component {
       <SpinnerBox message="Waiting for the sample project to become ready..." />
     );
     return (
-      <div className="configuration-page">
-        <div className="gradient-desk padding-bottom-xl">
-          <div className="kk-container">
-            <a href="/" className="logo-link">
-              <img className="logo" src={KontentLogo} alt="Kentico Kontent logo" />
-            </a>
-          </div>
-          <header>
-            <div className="kk-container">
-              <h1 className="headline-large">Sample Site—Configuration</h1>
-              <p className="margin-top-xl">
-                For your sample app to work, you should have a Kontent
-                project containing content. Your app should be then configured
-                with its project ID. You can either get it by signing in using
-                your Kontent credentials or by signing up for a trial.
-                Later, it will be converted to a free plan.
-              </p>
-              {message}
+      <div className="project-configuration-section">
+        <div className="logotype-row">
+          <div className="content">
+            <div className="logotype">
+              <a href="/" className="logotype-link">
+                <img
+                  src={KontentLogo}
+                  alt="Kontent logo"
+                  id="KenticoKontent"
+                  width="100%"
+                  height="100%"
+                />
+              </a>
             </div>
-          </header>
-          <div className="kk-container">
-            <section className="paper margin-top-xl">
-              <h2 className="headline-medium">Get a Project ID</h2>
-              <p className="margin-top-l">
-                You may wish to either select from existing projects or create a new
-                sample project. The app will be configured with its project ID.
-              </p>
-              <form onSubmit={this.openKenticoKontentProjectSelector}>
+          </div>
+        </div>
+        <header>
+          <div className="content">
+            <h1>Sample Site—Configuration</h1>
+            <p>
+              For your sample app to work, you should have a Kontent
+              project containing content. Your app should be then configured
+              with its project ID. You can either get it by signing in using
+              your Kontent credentials or by signing up for a trial.
+              Later, it will be converted to a free plan.
+            </p>
+            {message}
+          </div>
+        </header>
+        <section>
+          <h2>Get a Project ID</h2>
+          <p>
+            You may wish to either select from existing projects or create a new
+            sample project. The app will be configured with its project ID.
+          </p>
+          <form onSubmit={this.openKenticoKontentProjectSelector}>
+            <input
+              type="submit"
+              className="button-secondary"
+              value="Get Project ID from Kontent"
+            />
+          </form>
+        </section>
+        <div className="content sections-secondary divided">
+          <section className="section-secondary">
+            <h2>Set A Project ID Manually</h2>
+            <p>
+              Alternatively, you can configure your app manually by submitting a
+              project ID below.
+            </p>
+            <div className="inline-controls">
+              <form onSubmit={this.handleSetProjectSubmit}>
+                <div className="form-group">
+                  <div className="form-group-label">
+                    <label htmlFor="ProjectGuid">ProjectGuid</label>
+                  </div>
+                  <div className="form-group-input">
+                    <input
+                      id="ProjectGuid"
+                      name="ProjectGuid"
+                      placeholder="ProjectGuid"
+                      type="text"
+                      value={this.state.currentProjectInputValue}
+                      onChange={this.handleProjectInputChange}
+                    />
+                  </div>
+                  <div className="message-validation">
+                    <span className="field-validation-valid" />
+                  </div>
+                </div>
                 <input
                   type="submit"
-                  className="button button-primary margin-top-xl"
-                  value="Get Project ID from Kontent"
+                  className="button-secondary"
+                  value="Submit"
                 />
               </form>
-            </section>
-          </div>
-          <div className="kk-container">
-            <div className="row-lg row-lg--align-start">
-              <section className="col paper margin-top-xl">
-                <h2 className="headline-medium">Set A Project ID Manually</h2>
-                <p className='margin-top-l'>
-                  Alternatively, you can configure your app manually by submitting a
-                  project ID below.
-                </p>
-                <form className='project-id-form margin-top-xl' onSubmit={this.handleSetProjectSubmit}>
-                  <input
-                    aria-label='Project ID'
-                    autoComplete='off'
-                    id="ProjectGuid"
-                    name="ProjectGuid"
-                    placeholder="Project ID"
-                    type="text"
-                    value={this.state.currentProjectInputValue}
-                    onChange={this.handleProjectInputChange}
-                    className="project-id-form__input text-box single-line"
-                  />
-                  <span className="field-validation-valid" data-valmsg-for="ProjectGuid" data-valmsg-replace="true"></span>
-                  <input
-                    type="submit"
-                    className="button button-primary project-id-form__submit-button"
-                    value="Submit"
-                  />
-                </form>
-              </section>
-              <section className="col paper margin-top-xl">
-                <h2 className='headline-medium'>Use the Shared Project</h2>
-                <p className='margin-top-l'>
-                  Alternatively, you may wish to use the shared project (project ID
-                  "{defaultProjectId}
-                  ").
-                </p>
-                <p className='margin-top-l'>
-                  <strong>Note:</strong> You cannot edit content in the shared
-                  project.
-                </p>
-                <input
-                  type="submit"
-                  className="button button-primary margin-top-xl"
-                  value="Use the shared project"
-                  onClick={() => this.setNewProjectId(defaultProjectId)}
-                />
-              </section>
             </div>
-          </div>
+          </section>
+          <section className="section-secondary">
+            <h2>Use the Shared Project</h2>
+            <p>
+              Alternatively, you may wish to use the shared project (project ID
+              "{defaultProjectId}
+              ").
+            </p>
+            <p>
+              <strong>Note:</strong> You cannot edit content in the shared
+              project.
+            </p>
+            <input
+              type="submit"
+              className="button-secondary"
+              value="Use the shared project"
+              onClick={() => this.setNewProjectId(defaultProjectId)}
+            />
+          </section>
         </div>
       </div>
     );
